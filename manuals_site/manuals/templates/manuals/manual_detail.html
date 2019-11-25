@@ -1,0 +1,17 @@
+{% extends "manuals/header.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ manual.author }}</a>
+                <small class="text-muted">{{ manual.pub_date }}</small>
+            </div>
+            {% if manual.author == user %}
+            <a class="btn btn-default btn-sm mt-6 mb-1" href="{% url 'manual-update' manual.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-6 mb-1" href="{% url 'manual-delete' manual.id %}">Delete</a>
+            {% endif %}
+            <h2 class="article-title">{{ manual.title }}</h2>
+            <p class="article-content">{{ manual.content|safe }}</p>
+        </div>
+    </article>
+{% endblock %}

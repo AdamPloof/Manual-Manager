@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {{ form.media }}
+    <link rel="stylesheet" type="text/css" href="{% static 'manuals/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'manuals/css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Manuals</title>
+</head>
+<body>
+    <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="{% url 'index' %}">City Market Manuals</a></li>
+
+            {% if user.is_authenticated %}
+              <li role="presentation"><a href="{% url 'logout' %}">Log out</a></li>
+              <li role="presentation"><a href="{% url 'profile' %}">{{ user.username }}</a></li>
+            {% else %}
+              <li role="presentation"><a href="{% url 'login' %}">Log in</a></li>
+              <li role="presentation"><a href="{% url 'register' %}">Sign Up</a></li>
+            {% endif %}
+    </ul>
+    <div class="sidebar-container">
+            <div class="sidebar-logo">
+              Manuals Toolbar
+            </div>
+            <ul class="sidebar-navigation">
+              <li class="header">Finance</li>
+              <li>
+                <a href="{% url 'index' %}">
+                  <i class="fa fa-home" aria-hidden="true"></i> Home
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'manual-create' %}">
+                  <i class="fa fa-tachometer" aria-hidden="true"></i> New Manual
+                </a>
+              </li>
+              <li class="header">Favorites</li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-users" aria-hidden="true"></i> Accounts Payable
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-cog" aria-hidden="true"></i> Accounts Receivable
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i> Payroll
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="content-container">
+            <div class="container-fluid">
+              
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+              {% block content %}
+              {% endblock %}
+
+            </div>
+          </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'manuals/js/bootstrap.js' %}"></script>
+</body>
+</html>

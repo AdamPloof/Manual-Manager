@@ -11,7 +11,7 @@ def index(request):
         current_folder = Directory.objects.get(pk=dir_id)
 
         children = current_folder.get_children()
-        ancestors = current_folder.get_ancestors(ascending=True)
+        ancestors = current_folder.get_ancestors()
         manuals = current_folder.manuals.all()
 
         directories = {

@@ -39,8 +39,20 @@
     display: block;
     color: #fff;
   }
+
+  /* .sidebar-navigation li a::before {
+    margin-left: 2px;
+  } */
   
   .sidebar-navigation li .fa {
+    margin-right: 10px;
+  }
+
+  .sidebar-navigation li .far {
+    margin-right: 10px;
+  }
+
+  .sidebar-navigation li .fas {
     margin-right: 10px;
   }
   
@@ -122,7 +134,7 @@ a.folder-breadcrumb {
   font-size: 90%;
 }
 
-a.folder:hover {
+a.folder-breadcrumb:hover {
   color: #fff;
   text-decoration: none;
 }
@@ -137,6 +149,7 @@ a.folder-breadcrumb::after {
   content: '\f07c';
   font-family: "fontawesome"; 
   font-size: 14px;
+  font-weight: 900;
   float: left;
   margin-right: 6px;
 }

@@ -69,3 +69,12 @@ class ManualDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == manual.author:
             return True
         return False
+
+class DirectoryCreate(LoginRequiredMixin, CreateView):
+    model = Directory
+    fields = ['name', 'parent']
+    template_name = 'manuals/directory_form.html'
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return super().form_valid(form)

@@ -36,6 +36,7 @@ class Manual(models.Model):
 
 class Directory(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
+    creator = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     parent = TreeForeignKey(
     'self',
     null=True,

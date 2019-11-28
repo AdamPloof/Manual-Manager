@@ -76,5 +76,5 @@ class DirectoryCreate(LoginRequiredMixin, CreateView):
     template_name = 'manuals/directory_form.html'
 
     def form_valid(self, form):
-        form.instance.creator = self.request.user
+        form.instance.created_by = self.request.user
         return super().form_valid(form)

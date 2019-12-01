@@ -41,7 +41,7 @@
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a id="new-dir" href="#">
                   <i class="far fa-folder" aria-hidden="true"></i> New Folder
                 </a>
               </li>
@@ -79,7 +79,21 @@
 
             </div>
           </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'manuals/js/bootstrap.js' %}"></script>
+
+  <!-- Scripts -->
+  <script type="text/javascript" src="{% static 'manuals/js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'manuals/js/bootstrap.js' %}"></script>
+  <script type="text/javascript" src="{% static 'manuals/js/index.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#new-dir").modalForm({
+          formURL: "{% url 'dir-create' %}"
+      });
+    });
+  </script>
+
+
 </body>
 </html>

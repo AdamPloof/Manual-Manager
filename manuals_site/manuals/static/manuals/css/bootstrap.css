@@ -5992,6 +5992,7 @@ button.close {
   position: relative;
   width: auto;
   margin: 10px;
+  top: 25%;
 }
 .modal-content {
   position: relative;
@@ -6031,6 +6032,7 @@ button.close {
 .modal-title {
   margin: 0;
   line-height: 1.42857143;
+  display: inline-block;
 }
 .modal-body {
   position: relative;

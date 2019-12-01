@@ -3,6 +3,8 @@
 {% block content %}
 {% load static %}
 {% load mptt_tags %}
+
+    <!-- The Directory Table -->
     <div class="container-fluid" id="dir-table">
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
@@ -27,5 +29,12 @@
         </table>
     </div>
 
-    <script type="text/javascript" src="{% static 'manuals/js/index.js' %}"></script>
+    <!-- Modal Form -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+      
+          </div>
+        </div>
+      </div>
 {% endblock %}

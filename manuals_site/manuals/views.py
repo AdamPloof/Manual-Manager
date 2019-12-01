@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from .models import Manual, Directory
-from .forms import ManualForm
+from .forms import ManualForm, DirectoryForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
+from bootstrap_modal_forms.generic import BSModalCreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def index(request):
@@ -70,10 +72,13 @@ class ManualDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-class DirectoryCreate(LoginRequiredMixin, CreateView):
+class DirectoryCreate(LoginRequiredMixin, BSModalCreateView):
+    form_class = DirectoryForm
     model = Directory
-    fields = ['name', 'parent']
     template_name = 'manuals/directory_form.html'
+
+    success_message = 'Folder created successfully'
+    success_url = reverse_lazy('index')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

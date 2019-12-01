@@ -51,7 +51,7 @@ function changeDir(folder, dir_table) {
     request.send();
 }
 
-// Clears the current contents of the Favorite food section
+// Clears the current contents the directory table
 function clearTable(myTable) {
     while (myTable.firstChild) {
         myTable.firstChild.remove();

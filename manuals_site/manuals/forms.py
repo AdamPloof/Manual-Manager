@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from .models import Manual
+from bootstrap_modal_forms.forms import BSModalForm
+from .models import Manual, Directory
 from tinymce.widgets import TinyMCE
 
 class ManualForm(ModelForm):
@@ -9,3 +10,8 @@ class ManualForm(ModelForm):
         widgets = {
             'content': TinyMCE(attrs={'cols': 80, 'rows': 30})
         }
+
+class DirectoryForm(BSModalForm):
+    class Meta:
+        model = Directory
+        fields = ['name', 'parent']

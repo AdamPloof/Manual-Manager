@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mptt',
     'tinymce',
     'filebrowser',
+    'bootstrap_modal_forms',
 ]
 
 MIDDLEWARE = [

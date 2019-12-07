@@ -6,7 +6,7 @@
 <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
     <tr>
-        <th scope="col" class="file-root">
+        <th scope="col" class="file-root" id="pk-{{ current_folder.id }}">
             {% if ancestors %}
                 {% for ancestor in ancestors %}
                     <a class="folder folder-breadcrumb" id="pk-{{ ancestor.id }}" href="#">{{ ancestor.name }}</a>
@@ -20,7 +20,11 @@
     {% for directory in directories %}
         {% if not directory.name == "Root" %}
             <tr>
-                <td class="file-folder"><strong><a class="folder" id="pk-{{ directory.id }}"  href="#">{{ directory.name }}</a></strong></td>
+                <td class="file-folder">
+                    <strong><a class="folder" id="pk-{{ directory.id }}"  href="#">{{ directory.name }}</a></strong>
+                    <span><button class="btn btn-sm btn-danger folder-delete" data-id="{% url 'dir-delete' directory.id %}">Delete</button></span>
+                    <span><button class="btn btn-sm btn-default folder-update" data-id="{% url 'dir-update' directory.id %}">Rename</button></span>
+                </td>
             </tr>
         {% endif %}
     {% endfor %}

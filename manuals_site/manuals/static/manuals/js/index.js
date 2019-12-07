@@ -1,5 +1,8 @@
 
-scanDirectory();
+$(document).ready(function() {
+    scanDirectory();
+    getCurrentDir();
+});
 
 // Add an event listener to all folders a define the table to be refreshed.
 function scanDirectory() {
@@ -41,7 +44,9 @@ function changeDir(folder, dir_table) {
             clearTable(dir_table);
 
             dir_table.innerHTML = output;
+
             scanDirectory();
+            getCurrentDir();
         }
         else {
             console.log('Could not retrieve anything');
@@ -56,4 +61,26 @@ function clearTable(myTable) {
     while (myTable.firstChild) {
         myTable.firstChild.remove();
     }
+}
+
+// Update the current directory id for use in the create-folder form
+// Add a listener to the new-dir button and call the modal when clicked
+function getCurrentDir() {
+    let current_folder = document.getElementsByClassName('file-root')[0];
+    let dir_id = current_folder.id.slice(3);
+
+    // Call the modal form to Create new folder
+    $("#new-dir").modalForm({
+        formURL: "manual/new-folder?dir_id=" + dir_id
+    });
+
+    // Call the modal form to Update folder
+    $(".folder-update").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+
+    // Call the modal form to Delete folder
+    $(".folder-delete").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
 }

@@ -74,26 +74,19 @@
                   </div>
                 {% endfor %}
               {% endif %}
+
+<!-- Directory Table -->
               {% block content %}
               {% endblock %}
 
             </div>
           </div>
 
-  <!-- Scripts -->
-  <script type="text/javascript" src="{% static 'manuals/js/jquery.js' %}"></script>
-  <script type="text/javascript" src="{% static 'manuals/js/bootstrap.js' %}"></script>
-  <script type="text/javascript" src="{% static 'manuals/js/index.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#new-dir").modalForm({
-          formURL: "{% url 'dir-create' %}"
-      });
-    });
-  </script>
-
+<!-- Scripts -->
+<script type="text/javascript" src="{% static 'manuals/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'manuals/js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script type="text/javascript" src="{% static 'manuals/js/index.js' %}"></script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@ from .models import Manual, Directory
 from .forms import ManualForm, DirectoryForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
-from bootstrap_modal_forms.generic import BSModalCreateView
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def index(request):
@@ -81,5 +81,29 @@ class DirectoryCreate(LoginRequiredMixin, BSModalCreateView):
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
+        dir_id = int(self.request.GET.get('dir_id', default=1))
+        current_folder = Directory.objects.get(pk=dir_id)
+        form.instance.parent = current_folder
         form.instance.created_by = self.request.user
         return super().form_valid(form)
+
+class DirectoryUpdate(LoginRequiredMixin, BSModalUpdateView):
+    form_class = DirectoryForm
+    model = Directory
+    template_name = 'manuals/directory_form.html'
+
+    success_message = 'Folder saved successfully'
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        dir_id = int(self.request.GET.get('dir_id', default=1))
+        current_folder = Directory.objects.get(pk=dir_id)
+        form.instance.parent = current_folder
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+class DirectoryDelete(LoginRequiredMixin, BSModalDeleteView):
+    model = Directory
+
+    success_message = 'Folder deleted successfully'
+    success_url = '/'

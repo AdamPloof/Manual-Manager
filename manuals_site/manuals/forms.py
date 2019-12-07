@@ -14,4 +14,4 @@ class ManualForm(ModelForm):
 class DirectoryForm(BSModalForm):
     class Meta:
         model = Directory
-        fields = ['name', 'parent']
+        fields = ['name']

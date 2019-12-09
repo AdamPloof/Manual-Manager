@@ -54,6 +54,7 @@ function changeDir(folder, dir_table) {
     }
 
     request.send();
+
 }
 
 // Clears the current contents the directory table
@@ -64,10 +65,14 @@ function clearTable(myTable) {
 }
 
 // Update the current directory id for use in the create-folder form
-// Add a listener to the new-dir button and call the modal when clicked
 function getCurrentDir() {
     let current_folder = document.getElementsByClassName('file-root')[0];
     let dir_id = current_folder.id.slice(3);
+    initModals(dir_id);
+}
+
+// Add a listener to the new-dir button and call the modal when clicked
+function initModals(dir_id) {
 
     // Call the modal form to Create new folder
     $("#new-dir").modalForm({
@@ -76,11 +81,11 @@ function getCurrentDir() {
 
     // Call the modal form to Update folder
     $(".folder-update").each(function() {
-        $(this).modalForm({formURL: $(this).data('id')});
+        $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id});
     });
 
     // Call the modal form to Delete folder
     $(".folder-delete").each(function() {
-        $(this).modalForm({formURL: $(this).data('id')});
+        $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id});
     });
 }

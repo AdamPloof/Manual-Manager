@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from .my_functions import reverse_query
 from .models import Manual, Directory
-from .forms import ManualForm, DirectoryForm
+from .forms import ManualForm, DirectoryForm, DirectoryUpdateForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
@@ -78,7 +79,6 @@ class DirectoryCreate(LoginRequiredMixin, BSModalCreateView):
     template_name = 'manuals/directory_form.html'
 
     success_message = 'Folder created successfully'
-    success_url = reverse_lazy('index')
 
     def form_valid(self, form):
         dir_id = int(self.request.GET.get('dir_id', default=1))
@@ -87,23 +87,37 @@ class DirectoryCreate(LoginRequiredMixin, BSModalCreateView):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Create Folder'
+        return context
+
+    def get_success_url(self):
+        dir_id = self.request.GET.get('dir_id', default=1)
+        return reverse_query('index', get={'dir_id': dir_id})
+
+
 class DirectoryUpdate(LoginRequiredMixin, BSModalUpdateView):
-    form_class = DirectoryForm
+    form_class = DirectoryUpdateForm
     model = Directory
     template_name = 'manuals/directory_form.html'
 
     success_message = 'Folder saved successfully'
-    success_url = reverse_lazy('index')
 
-    def form_valid(self, form):
-        dir_id = int(self.request.GET.get('dir_id', default=1))
-        current_folder = Directory.objects.get(pk=dir_id)
-        form.instance.parent = current_folder
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Update Folder'
+        return context
+
+    def get_success_url(self):
+        dir_id = self.request.GET.get('dir_id', default=1)
+        return reverse_query('index', get={'dir_id': dir_id})
 
 class DirectoryDelete(LoginRequiredMixin, BSModalDeleteView):
     model = Directory
 
     success_message = 'Folder deleted successfully'
-    success_url = '/'
+
+    def get_success_url(self):
+        dir_id = self.request.GET.get('dir_id', default=1)
+        return reverse_query('index', get={'dir_id': dir_id})

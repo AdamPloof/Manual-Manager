@@ -15,3 +15,7 @@ class DirectoryForm(BSModalForm):
     class Meta:
         model = Directory
         fields = ['name']
+
+class DirectoryUpdateForm(DirectoryForm):
+    class Meta(DirectoryForm.Meta):
+        fields = ['name', 'parent']

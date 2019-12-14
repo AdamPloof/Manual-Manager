@@ -2,6 +2,7 @@
 $(document).ready(function() {
     scanDirectory();
     getCurrentDir();
+    showDropdowns();
 });
 
 // Add an event listener to all folders a define the table to be refreshed.
@@ -47,6 +48,7 @@ function changeDir(folder, dir_table) {
 
             scanDirectory();
             getCurrentDir();
+            showDropdowns();
         }
         else {
             console.log('Could not retrieve anything');
@@ -89,3 +91,39 @@ function initModals(dir_id) {
         $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id});
     });
 }
+
+// Show the dropdown for update/delete folders
+function showDropdowns() {
+    let dropdownBtns = document.getElementsByClassName("btn-drop");
+
+    for(let i = 0; i < dropdownBtns.length; i++) {
+        dropdownBtns[i].addEventListener("click", function() {
+            closeDropdowns();
+            this.nextElementSibling.classList.toggle("show-drop");
+        })
+    }
+  }
+  
+// Close all open drop downdowns
+function closeDropdowns() {
+    let dropdowns = document.getElementsByClassName("drop-menu");
+    for (let i = 0; i < dropdowns.length; i++) {
+      let openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show-drop')) {
+        openDropdown.classList.remove('show-drop');
+      }
+    } 
+}
+
+  // Close the dropdown menu if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.btn-drop')) {
+      let dropdowns = document.getElementsByClassName("drop-menu");
+      for (let i = 0; i < dropdowns.length; i++) {
+        let openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show-drop')) {
+          openDropdown.classList.remove('show-drop');
+        }
+      }
+    }
+  } 

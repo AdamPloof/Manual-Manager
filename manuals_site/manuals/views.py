@@ -104,6 +104,12 @@ class DirectoryUpdate(LoginRequiredMixin, BSModalUpdateView):
 
     success_message = 'Folder saved successfully'
 
+    def get_form_kwargs(self):
+        dir_id = self.request.GET.get('dir_id', default=1)
+        kwargs = super(DirectoryUpdate, self).get_form_kwargs()
+        kwargs['node'] = Directory.objects.get(pk=dir_id)
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Update Folder'

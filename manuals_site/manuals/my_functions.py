@@ -19,6 +19,6 @@ def valid_move_nodes(node):
     current_dir = Directory.objects.get(pk=node.pk)
     exclude_dirs = current_dir.get_descendants(include_self=True)
 
-    move_to_dirs = Directory.objects.exclude(parent__in=exclude_dirs)
+    move_to_dirs = Directory.objects.exclude(parent__in=exclude_dirs).exclude(pk=current_dir.pk)
 
     return move_to_dirs

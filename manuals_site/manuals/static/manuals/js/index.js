@@ -83,12 +83,14 @@ function initModals(dir_id) {
 
     // Call the modal form to Update folder
     $(".folder-update").each(function() {
-        $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id});
+        node = $(this).data('pk')
+        $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id + "&node=" + node});
     });
 
     // Call the modal form to Delete folder
     $(".folder-delete").each(function() {
-        $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id});
+        node = $(this).data('pk')
+        $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id + "&node=" + node});
     });
 }
 

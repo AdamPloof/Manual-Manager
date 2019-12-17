@@ -104,10 +104,12 @@ class DirectoryUpdate(LoginRequiredMixin, BSModalUpdateView):
 
     success_message = 'Folder saved successfully'
 
+    # Will want to overide form_valid method to prevent users from create new root nodes.
+
     def get_form_kwargs(self):
-        dir_id = self.request.GET.get('dir_id', default=1)
+        node_id = self.request.GET.get('node', default=1)
         kwargs = super(DirectoryUpdate, self).get_form_kwargs()
-        kwargs['node'] = Directory.objects.get(pk=dir_id)
+        kwargs['node'] = Directory.objects.get(pk=node_id)
         return kwargs
 
     def get_context_data(self, **kwargs):

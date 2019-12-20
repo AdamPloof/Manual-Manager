@@ -13,9 +13,15 @@ class ManualForm(ModelForm):
             'content': TinyMCE(attrs={'cols': 80, 'rows': 30})
         }
     
-    def __init__(self, current_dir, *args, **kwargs):
-        super(ManualForm, self).__init__(*args, **kwargs)
-        self.initial['folder'] = current_dir
+    def __init__(self, *args, **kwargs):
+        # Get current directory to set initial parent when creating new manuals
+        # Use set parent when updating manuals
+        current_dir = kwargs.pop('current_dir', None)
+        if current_dir:
+            super(ManualForm, self).__init__(*args, **kwargs)
+            self.initial['folder'] = current_dir
+        else:
+            super(ManualForm, self).__init__(*args, **kwargs)
 
 class DirectoryForm(BSModalForm):
     class Meta:

@@ -4053,7 +4053,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
-  background-color: rgb(201, 201, 201)
+  background-color: rgb(163, 184, 136)
 }
 .nav > li {
   position: relative;
@@ -4067,7 +4067,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #e7e7e7;
+  background-color: #c5d4a9;
 }
 .nav > li.disabled > a {
   color: #777777;
@@ -4113,7 +4113,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #555555;
+  color: #585c51;
   cursor: default;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -4177,13 +4177,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: rgb(201, 201, 201);
-  background-color: rgb(53, 53, 53);
+  color: rgba(253, 250, 250, 0.986);
+  background-color: rgb(68, 75, 63);
 }
 
 .nav-pills > li.active > a:hover {
-  color: rgb(235, 232, 232);
-  background-color: rgb(80, 80, 80);
+  color: rgb(255, 255, 255);
+  background-color: rgb(90, 95, 78);
 }
 
 .nav-stacked > li {

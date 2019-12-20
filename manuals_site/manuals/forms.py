@@ -12,6 +12,10 @@ class ManualForm(ModelForm):
         widgets = {
             'content': TinyMCE(attrs={'cols': 80, 'rows': 30})
         }
+    
+    def __init__(self, current_dir, *args, **kwargs):
+        super(ManualForm, self).__init__(*args, **kwargs)
+        self.initial['folder'] = current_dir
 
 class DirectoryForm(BSModalForm):
     class Meta:

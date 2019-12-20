@@ -42,6 +42,12 @@ class ManualCreate(LoginRequiredMixin, CreateView):
     # fields = ['title', 'content', 'folder', 'tags']
     template_name = 'manuals/manual_form.html'
 
+    def get_form_kwargs(self):
+        current_dir_id = int(self.request.GET.get('current_dir', default=1))
+        kwargs = super(ManualCreate, self).get_form_kwargs()
+        kwargs['current_dir'] = Directory.objects.get(pk=current_dir_id)
+        return kwargs
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)

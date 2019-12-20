@@ -70,7 +70,27 @@ function clearTable(myTable) {
 function getCurrentDir() {
     let current_folder = document.getElementsByClassName('file-root')[0];
     let dir_id = current_folder.id.slice(3);
+    newManualDir(dir_id);
     initModals(dir_id);
+}
+
+// Update the new manual link to include ?current-dir= param
+function newManualDir(current_dir) {
+    let new_manual_btn = document.getElementById("new-manual");
+    let url = new URL(new_manual_btn.href);
+
+    if (!url.search) {
+        let query_string = "?current_dir=" + current_dir;
+        new_manual_btn.href +=query_string;
+    }
+    else {
+        console.log(url);
+        let query_string = url.search;
+        let search_params = new URLSearchParams(query_string);
+        search_params.set('current_dir', current_dir);
+        url.search = search_params.toString();
+        new_manual_btn.href = url.toString();
+    }
 }
 
 // Add a listener to the new-dir button and call the modal when clicked

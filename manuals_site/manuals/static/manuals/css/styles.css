@@ -38,9 +38,9 @@
     color: #fff;
   }
 
-  /* .sidebar-navigation li a::before {
-    margin-left: 2px;
-  } */
+  #new-dir.not-allowed {
+    color: rgba(211, 211, 211, 0.61);
+  }
   
   .sidebar-navigation li .fa {
     margin-right: 10px;
@@ -93,6 +93,7 @@
     position: fixed;
     top: 0;
     z-index: 1;
+    box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.2);
   }
 
 /* Account image */
@@ -269,6 +270,10 @@ ul.breadcrumb li a:hover {
 
 /* Update/Assignment manual header */
 
+.media-body {
+  padding: 8px;
+}
+
 .article-head {
   position: relative;
   display: flex;
@@ -276,7 +281,9 @@ ul.breadcrumb li a:hover {
   margin: auto;
   border-radius: 5px;
   padding: 12px;
+  margin-bottom: 36px;
   align-items: center;
+  box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
 }
 
 .article-info {

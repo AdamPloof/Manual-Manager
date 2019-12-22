@@ -19,6 +19,22 @@ function scanDirectory() {
             changeDir(this, dir_table);
         })
     }
+    
+    allowNewDir(dir_table);
+}
+
+// Add not-allowed to new-dir button if the dir_table is not present
+function allowNewDir(dir_table) {
+    let new_dir_btn = document.getElementById('new-dir');
+    if (!dir_table) {
+        new_dir_btn.classList.toggle('not-allowed');
+    }
+    else if (new_dir_btn.classList.contains('not-allowed')) {
+        new_dir_btn.classList.remove('not-allowed');
+    }
+    else {
+        // pass
+    }
 }
 
 // Change directory to selected folder

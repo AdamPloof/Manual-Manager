@@ -5,7 +5,7 @@ $(document).ready(function() {
     showDropdowns();
 });
 
-// Add an event listener to all folders a define the table to be refreshed.
+// Add an event listener to all folders and define the table to be refreshed.
 function scanDirectory() {
     var folders = document.getElementsByClassName('folder');
     var dir_table = document.getElementById('dir-table');

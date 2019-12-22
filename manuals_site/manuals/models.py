@@ -10,12 +10,16 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 class Manual(models.Model):
     title = models.CharField(max_length=100)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, related_name='Author', null=True, on_delete=models.SET_NULL)
     content = models.TextField()
     tags = models.CharField(max_length=150)
     pub_date = models.DateTimeField('Date Published', auto_now_add=True)
-    last_update = models.DateTimeField('Last Update', auto_now=True)
-    is_archived = models.BooleanField(default=False)
+    admin = models.ForeignKey(User, related_name='Admin', null=True, on_delete=models.SET_NULL)
+    last_update = models.DateTimeField('Last Update', null=True, auto_now=True)
+    last_update_by = models.ForeignKey(User, related_name='User', null=True, on_delete=models.SET_NULL)
+    next_update = models.DateTimeField('Next Update Due', null=True)
+    update_assigned_to = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    is_archived = models.BooleanField('Archived', default=False)
 
     folder = TreeForeignKey(
     'Directory',
@@ -28,8 +32,8 @@ class Manual(models.Model):
         return self.title
 
     def next_update_due(self):
-        now = timezone.now()
-        return last_update + datetime.timedelta(days=90)
+        return self.last_update + datetime.timedelta(days=90)
+        
 
     def get_absolute_url(self):
         return reverse('manual-detail', kwargs={'pk': self.pk})

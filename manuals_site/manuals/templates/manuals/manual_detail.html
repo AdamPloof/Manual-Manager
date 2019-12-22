@@ -2,14 +2,29 @@
 {% block content %}
     <article class="media content-section">
         <div class="media-body">
-            <div class="article-metadata">
-                <a class="mr-2" href="#">{{ manual.author }}</a>
-                <small class="text-muted">{{ manual.pub_date }}</small>
+            <div class="article-head">
+                <div class="article-info">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="#">{{ manual.author }}</a>
+                        <small class="text-muted">{{ manual.pub_date }}</small>
+                    </div>
+                    {% if manual.author == user %}
+                    <a class="btn btn-default btn-sm mt-6 mb-1" href="{% url 'manual-update' manual.id %}">Update</a>
+                    <a class="btn btn-danger btn-sm mt-6 mb-1" href="{% url 'manual-delete' manual.id %}">Delete</a>
+                    {% endif %}
+                </div>
+                <div class="article-update">
+                    <strong>Admin: </strong><a class="mr-2" href="#">{{ manual.admin }}</a>
+                    <div class="article-metadata">
+                        <strong>Last Update: </strong><a class="mr-2" href="#">{{ manual.last_update_by }}</a>
+                        <small class="text-muted">{{ manual.last_update }}</small>
+                    </div>
+                    <div class="article-metadata">
+                        <strong>Assigned to: </strong><a class="mr-2" href="#">{{ manual.update_assigned_to }}</a>
+                        <small class="text-muted">Next Update: {{ manual.next_update_due|date:"M. d, Y" }}</small>
+                    </div>
+                </div>
             </div>
-            {% if manual.author == user %}
-            <a class="btn btn-default btn-sm mt-6 mb-1" href="{% url 'manual-update' manual.id %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-6 mb-1" href="{% url 'manual-delete' manual.id %}">Delete</a>
-            {% endif %}
             <h2 class="article-title">{{ manual.title }}</h2>
             <p class="article-content">{{ manual.content|safe }}</p>
         </div>

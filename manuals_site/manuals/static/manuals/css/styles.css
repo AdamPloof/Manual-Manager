@@ -67,18 +67,6 @@
     outline: none;
   }
   
-  /* .sidebar-navigation li::before {
-    background-color: rgb(116, 114, 114);
-    position: absolute;
-    content: '';
-    height: 100%;
-    left: 0;
-    top: 0;
-    transition: 0.2s ease-in;
-    width: 3px;
-    z-index: -1;
-  } */
-  
   .sidebar-navigation li:hover::before {
     width: 100%;
   }
@@ -104,6 +92,7 @@
     width: 100%;
     position: fixed;
     top: 0;
+    z-index: 1;
   }
 
 /* Account image */
@@ -216,7 +205,8 @@ a.folder-breadcrumb::after {
 }
 
 .folder-delete {
-  background-color: rgb(194, 90, 90);
+  background-color: rgb(231, 81, 81);
+  color: white;
 }
 
 .folder-update:hover {
@@ -225,7 +215,7 @@ a.folder-breadcrumb::after {
 }
 
 .folder-delete:hover {
-  background-color: rgb(252, 64, 64);
+  background-color: rgb(196, 60, 60);
   color: white;
   text-decoration: none;
 }
@@ -275,4 +265,34 @@ ul.breadcrumb li a:hover {
 
 .mb-1 {
   margin-bottom: 1px;
+}
+
+/* Update/Assignment manual header */
+
+.article-head {
+  position: relative;
+  display: flex;
+  background-color: rgb(224, 221, 221);
+  margin: auto;
+  border-radius: 5px;
+  padding: 12px;
+  align-items: center;
+}
+
+.article-info {
+  display: block;
+}
+
+.article-update {
+  position: relative;
+  left: 200px;
+  margin: auto;
+  overflow: auto;
+}
+
+/* Manual Layout */
+.content-section {
+  width: 95%;
+  margin: auto;
+  margin-bottom: 60px;
 }

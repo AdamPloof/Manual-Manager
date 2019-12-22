@@ -1,3 +1,6 @@
+import datetime
+
+from django.utils import timezone
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .my_functions import reverse_query
@@ -49,7 +52,10 @@ class ManualCreate(LoginRequiredMixin, CreateView):
         return kwargs
 
     def form_valid(self, form):
+        now = timezone.now()
         form.instance.author = self.request.user
+        form.instance.last_update_by = self.request.user
+        form.instance.next_update = now + datetime.timedelta(days=90)
         return super().form_valid(form)
 
 class ManualUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -58,9 +64,11 @@ class ManualUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     # fields = ['title', 'content', 'folder', 'tags']
     template_name = 'manuals/manual_form.html'
 
-    #Figure out a way to make a separate field for last_updated_by User
     def form_valid(self, form):
+        now = timezone.now()
         form.instance.author = self.request.user
+        form.instance.last_update_by = self.request.user
+        form.instance.next_update = now + datetime.timedelta(days=90)
         return super().form_valid(form)
     
     def test_func(self):

@@ -12,9 +12,95 @@
         </div>
       </div>
     </div>
-    <!-- FORM HERE -->
-  </div>
 
+    <!-- Manuals Authored Container -->
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><h5 class="panel-title">Authored</h5></div>
+      <!-- <div class="panel-body">
+        <p>{% lorem 1 p %}</p>
+      </div> -->
+    
+      <!-- List group -->
+      <ul class="list-group">
+        {% if author %}
+          {% for manual in author %}
+            <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">
+              {{ manual.title }} <small class="algn-right text-muted">{{ manual.folder }}</small>
+            </a>
+          {% endfor %}
+        {% else %}
+          <li class="list-group-item">You have no manuals authored.</li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <!-- Manuals Assigned Container -->
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><h5 class="panel-title">Assigned</h5></div>
+      <!-- <div class="panel-body">
+        <p>{% lorem 1 p %}</p>
+      </div> -->
+    
+      <!-- List group -->
+      <ul class="list-group">
+        {% if assigned %}
+          {% for manual in assigned %}
+            <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">
+              {{ manual.title }} <small class="algn-right text-muted">{{ manual.folder }}</small>
+            </a>
+          {% endfor %}
+          {% else %}
+          <li class="list-group-item">You have no manuals assigned.</li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <!-- Manuals Updated Container -->
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><h5 class="panel-title">Updated</h5></div>
+      <!-- <div class="panel-body">
+        <p>{% lorem 1 p %}</p>
+      </div> -->
+    
+      <!-- List group -->
+      <ul class="list-group">
+        {% if updated %}
+          {% for manual in updated %}
+            <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">
+              {{ manual.title }} <small class="algn-right text-muted">{{ manual.folder }}</small>
+            </a>
+          {% endfor %}
+          {% else %}
+          <li class="list-group-item">You have no manuals recently updated.</li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <!-- Manuals Admin Container -->
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><h5 class="panel-title">Admin</h5></div>
+      <!-- <div class="panel-body">
+        <p>{% lorem 1 p %}</p>
+      </div> -->
+    
+      <!-- List group -->
+      <ul class="list-group">
+        {% if admin_of %}
+          {% for manual in admin_of %}
+            <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">
+              {{ manual.title }} <small class="algn-right text-muted">{{ manual.folder }}</small>
+            </a>
+          {% endfor %}
+          {% else %}
+          <li class="list-group-item">You have not been assigned admin to any manuals.</li>
+        {% endif %}
+      </ul>
+    </div>
 
 
 {% endblock %}
+

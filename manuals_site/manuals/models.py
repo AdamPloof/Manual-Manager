@@ -10,15 +10,15 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 class Manual(models.Model):
     title = models.CharField(max_length=100)
-    author = models.ForeignKey(User, related_name='Author', null=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, related_name='author', null=True, on_delete=models.SET_NULL)
     content = models.TextField()
     tags = models.CharField(max_length=150)
     pub_date = models.DateTimeField('Date Published', auto_now_add=True)
-    admin = models.ForeignKey(User, related_name='Admin', null=True, on_delete=models.SET_NULL)
+    admin = models.ForeignKey(User, related_name='admin_of', null=True, on_delete=models.SET_NULL)
     last_update = models.DateTimeField('Last Update', null=True, auto_now=True)
-    last_update_by = models.ForeignKey(User, related_name='User', null=True, on_delete=models.SET_NULL)
+    last_update_by = models.ForeignKey(User, related_name='updated_by', null=True, on_delete=models.SET_NULL)
     next_update = models.DateTimeField('Next Update Due', null=True)
-    update_assigned_to = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    update_assigned_to = models.ForeignKey(User, related_name='assigned_to', null=True, on_delete=models.SET_NULL)
     is_archived = models.BooleanField('Archived', default=False)
 
     folder = TreeForeignKey(

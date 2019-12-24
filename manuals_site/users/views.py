@@ -17,5 +17,18 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    current_user = request.user
+    author = current_user.author.all()
+    assigned = current_user.assigned_to.all()
+    admin_of = current_user.admin_of.all()
+    updated_by = current_user.updated_by.all()
+
+    context = {
+        'author': author,
+        'assigned': assigned,
+        'admin_of': admin_of,
+        'updated': updated_by
+    }
+
+    return render(request, 'users/profile.html', context)
  

@@ -2,31 +2,45 @@
 {% block content %}
     <article class="media content-section">
         <div class="media-body">
-            <div class="article-head">
-                <div class="article-info">
-                    <div class="article-metadata">
-                        <a class="mr-2" href="#">{{ manual.author }}</a>
-                        <small class="text-muted">{{ manual.pub_date }}</small>
-                    </div>
-                    {% if manual.author == user %}
-                    <a class="btn btn-default btn-sm mt-6 mb-1" href="{% url 'manual-update' manual.id %}">Update</a>
-                    <a class="btn btn-danger btn-sm mt-6 mb-1" href="{% url 'manual-delete' manual.id %}">Delete</a>
-                    {% endif %}
+            {% if manual.update_status == "due_soon" %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Notice!</strong> This manual is due for an update by {{ manual.next_update|date:"M. d, Y" }}
                 </div>
-                <div class="article-update">
-                    <strong>Admin: </strong><a class="mr-2" href="#">{{ manual.admin }}</a>
-                    <div class="article-metadata">
-                        <strong>Last Update: </strong><a class="mr-2" href="#">{{ manual.last_update_by }}</a>
-                        <small class="text-muted">{{ manual.last_update }}</small>
+                <div class="article-head manual-warning">
+            {% elif manual.update_status == "overdue" %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Notice!</strong> This manual is past due for an update as of {{ manual.next_update|date:"M. d, Y" }}
+                </div>
+                <div class="article-head manual-danger">
+            {% else %}
+                <div class="article-head">
+            {% endif %}
+                    <div class="article-info">
+                        <div class="article-metadata">
+                            <a class="mr-2" href="#">{{ manual.author }}</a>
+                            <small class="text-muted">{{ manual.pub_date }}</small>
+                        </div>
+                        {% if manual.author == user %}
+                        <a class="btn btn-default btn-sm mt-6 mb-1" href="{% url 'manual-update' manual.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-6 mb-1" href="{% url 'manual-delete' manual.id %}">Delete</a>
+                        {% endif %}
                     </div>
-                    <div class="article-metadata">
-                        <strong>Assigned to: </strong><a class="mr-2" href="#">{{ manual.update_assigned_to }}</a>
-                        <small class="text-muted">Next Update: {{ manual.next_update_due|date:"M. d, Y" }}</small>
+                    <div class="article-update">
+                        <strong>Admin: </strong><a class="mr-2" href="#">{{ manual.admin }}</a>
+                        <div class="article-metadata">
+                            <strong>Last Update: </strong><a class="mr-2" href="#">{{ manual.last_update_by }}</a>
+                            <small class="text-muted">{{ manual.last_update }}</small>
+                        </div>
+                        <div class="article-metadata">
+                            <strong>Assigned to: </strong><a class="mr-2" href="#">{{ manual.update_assigned_to }}</a>
+                            <small class="text-muted">Next Update: {{ manual.next_update|date:"M. d, Y" }}</small>
+                        </div>
                     </div>
                 </div>
+                <h2 class="article-title">{{ manual.title }}</h2>
+                <p class="article-content">{{ manual.content|safe }}</p>
             </div>
-            <h2 class="article-title">{{ manual.title }}</h2>
-            <p class="article-content">{{ manual.content|safe }}</p>
-        </div>
     </article>
 {% endblock %}

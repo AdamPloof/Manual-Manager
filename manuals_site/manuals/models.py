@@ -31,8 +31,22 @@ class Manual(models.Model):
     def __str__(self):
         return self.title
 
-    def next_update_due(self):
-        return self.last_update + datetime.timedelta(days=90)
+    def update_status(self):
+        status = [
+            'up_to_date',
+            'due_soon',
+            'overdue'
+        ]
+
+        if self.next_update - self.last_update >= datetime.timedelta(weeks=2):
+            # manual is up to date
+            return status[0]
+        elif self.next_update - self.last_update <= datetime.timedelta(days=0):
+            # manual is overdue
+            return status[2]
+        else:
+            # manual is coming due soon
+            return status[1]
         
 
     def get_absolute_url(self):

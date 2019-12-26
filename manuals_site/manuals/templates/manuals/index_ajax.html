@@ -36,8 +36,20 @@
         {% endif %}
     {% endfor %}
     {% for manual in manuals %}
-        <tr>
+        {% if manual.update_status == "due_soon" %}
+            <tr class="warning">
+            <td class="file-file"><a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a>
+                <small class="text-muted"> -- due soon</small>
+            </td>
+        {% elif manual.update_status == "overdue" %}
+            <tr class="danger">
+            <td class="file-file"><a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a>
+                <small class="text-muted"> -- past due</small>
+            </td>
+        {% else %}
+            <tr>
             <td class="file-file"><a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td>
+        {% endif %}
             <td></td>
         </tr>
     {% endfor %}

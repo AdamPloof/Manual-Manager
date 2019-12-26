@@ -25,9 +25,20 @@
       <ul class="list-group">
         {% if author %}
           {% for manual in author %}
-            <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">
-              {{ manual.title }} <small class="algn-right text-muted">{{ manual.folder }}</small>
+
+            {% if manual.update_status == "due_soon" %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item list-group-item-warning">{{ manual.title }} 
+              <small class="text-muted"> -- due soon</small>  
+            {% elif manual.update_status == "overdue" %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item list-group-item-danger">{{ manual.title }} 
+              <small class="text-muted"> -- past due</small>
+            {% else %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">{{ manual.title }} 
+            {% endif %}
+            
+              <small class="algn-right text-muted">{{ manual.folder }}</small>
             </a>
+
           {% endfor %}
         {% else %}
           <li class="list-group-item">You have no manuals authored.</li>
@@ -47,9 +58,20 @@
       <ul class="list-group">
         {% if assigned %}
           {% for manual in assigned %}
-            <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">
-              {{ manual.title }} <small class="algn-right text-muted">{{ manual.folder }}</small>
+
+            {% if manual.update_status == "due_soon" %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item list-group-item-warning">{{ manual.title }} 
+              <small class="text-muted"> -- due soon</small>  
+            {% elif manual.update_status == "overdue" %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item list-group-item-danger">{{ manual.title }} 
+              <small class="text-muted"> -- past due</small>
+            {% else %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">{{ manual.title }} 
+            {% endif %}
+          
+              <small class="algn-right text-muted">{{ manual.folder }}</small>
             </a>
+
           {% endfor %}
           {% else %}
           <li class="list-group-item">You have no manuals assigned.</li>
@@ -69,9 +91,19 @@
       <ul class="list-group">
         {% if updated %}
           {% for manual in updated %}
-            <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">
-              {{ manual.title }} <small class="algn-right text-muted">{{ manual.folder }}</small>
-            </a>
+
+            {% if manual.update_status == "due_soon" %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item list-group-item-warning">{{ manual.title }} 
+              <small class="text-muted"> -- due soon</small>  
+            {% elif manual.update_status == "overdue" %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item list-group-item-danger">{{ manual.title }} 
+              <small class="text-muted"> -- past due</small>
+            {% else %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">{{ manual.title }} 
+            {% endif %}
+        
+                <small class="algn-right text-muted">{{ manual.folder }}</small>
+              </a>
           {% endfor %}
           {% else %}
           <li class="list-group-item">You have no manuals recently updated.</li>
@@ -91,9 +123,20 @@
       <ul class="list-group">
         {% if admin_of %}
           {% for manual in admin_of %}
-            <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">
-              {{ manual.title }} <small class="algn-right text-muted">{{ manual.folder }}</small>
+
+            {% if manual.update_status == "due_soon" %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item list-group-item-warning">{{ manual.title }} 
+              <small class="text-muted"> -- due soon</small>  
+            {% elif manual.update_status == "overdue" %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item list-group-item-danger">{{ manual.title }} 
+              <small class="text-muted"> -- past due</small>
+            {% else %}
+              <a href="{% url 'manual-detail' manual.id %}" class="list-group-item">{{ manual.title }} 
+            {% endif %}
+      
+              <small class="algn-right text-muted">{{ manual.folder }}</small>
             </a>
+
           {% endfor %}
           {% else %}
           <li class="list-group-item">You have not been assigned admin to any manuals.</li>

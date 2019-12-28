@@ -31,4 +31,9 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+# add test so to check that user.is_staff
+@login_required
+def manage(request):
+    return render(request, 'users/manage.html')
  

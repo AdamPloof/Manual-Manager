@@ -1,3 +1,7 @@
+.container-fluid.main-container {
+  margin-top: 25px;
+}
+
 .sidebar-container {
     position: fixed;
     width: 220px;
@@ -7,13 +11,14 @@
     overflow-y: auto;
     background: #1f1f1f;
     color: #fff;
-    z-index: 3;
+    z-index: 2;
     top: 0;
   }
   
   .sidebar-logo {
-    padding: 6px 15px 5px 30px;
+    padding: 15px 15px 5px 30px;
     font-size: 20px;
+    height: 55px;
     background-color: rgb(52, 66, 44);
   }
   
@@ -82,19 +87,76 @@
     background-color: transparent;
   }
 
-  .content-container {
-    padding-left: 235px;
-    margin-top: 30px;
-    padding-top: 45px;
-  }
+.content-container {
+  padding-left: 235px;
+  margin-top: 30px;
+  padding-top: 45px;
+}
 
-  .nav-pills {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 2;
-    box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.2);
-  }
+.container-fluid.nav-container {
+  padding-left: 0px;
+}
+
+.navbar {
+  max-height: 55px;
+  min-height: 55px;
+}
+
+.navbar-default {
+  border: none;
+  border-radius: 0px;
+  background-color: rgb(163, 184, 136);
+  z-index: 2;
+  box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.2);
+}
+
+.navbar-header {
+  background-color: rgb(52, 66, 44);
+  width: 220px;
+  margin: 0px;
+}
+
+.navbar-brand {
+  color: #fff;
+}
+
+#admin-btn {
+  left: 0;
+  background-color: green;
+  border-radius: 30%;
+  z-index: 3;
+}
+
+#admin-btn:hover {
+  background-color: lightgreen;
+  border-radius: 30%;
+}
+
+.nav-pills {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+  color: rgba(253, 250, 250, 0.986);
+  background-color: rgb(68, 75, 63);
+}
+
+.nav-pills > li.active > a:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(90, 95, 78);
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: rgba(78, 78, 78, 0.986);
+}
+
+.input-group {
+  top: 2px;
+}
 
 /* Account image */
 .rounded-circle {

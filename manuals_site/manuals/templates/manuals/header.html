@@ -13,17 +13,41 @@
     <title>Manuals</title>
 </head>
 <body>
-    <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="{% url 'index' %}">City Market Manuals</a></li>
 
-            {% if user.is_authenticated %}
-              <li role="presentation"><a href="{% url 'logout' %}">Log out</a></li>
-              <li role="presentation"><a href="{% url 'profile' %}">{{ user.username }}</a></li>
-            {% else %}
-              <li role="presentation"><a href="{% url 'login' %}">Log in</a></li>
-              <li role="presentation"><a href="{% url 'register' %}">Sign Up</a></li>
-            {% endif %}
-    </ul>
+  <!-- Fixed top navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid nav-container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Market Manuals</a>
+      </div>
+      <ul class="nav navbar-nav nav-pills">
+        {% if user.is_authenticated and user.is_staff %}
+          <li><a href="{% url 'manage' %}"><strong>Admin</strong></a></li>
+        {% endif %} 
+      </ul>
+      <ul class="nav nav-pills navbar-right">
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Log out</a></li>
+          <li><a href="{% url 'profile' %}">{{ user.username }}</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}">Log in</a></li>
+          <li><a href="{% url 'register' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+      <form class="navbar-form navbar-left" action="/action_page.php">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search">
+          <div class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form> 
+    </div>
+  </nav>
+
+  <!-- Fixed sidebar -->
     <div class="sidebar-container">
             <div class="sidebar-logo">
               Manuals Toolbar
@@ -65,7 +89,7 @@
           </div>
           
           <div class="content-container">
-            <div class="container-fluid">
+            <div class="container-fluid main-container">
               
               {% if messages %}
                 {% for message in messages %}
@@ -75,7 +99,7 @@
                 {% endfor %}
               {% endif %}
 
-<!-- Directory Table -->
+<!-- Page Content -->
               {% block content %}
               {% endblock %}
 

@@ -45,6 +45,7 @@
 
   #new-dir.not-allowed {
     color: rgba(211, 211, 211, 0.61);
+    cursor: not-allowed;
   }
   
   .sidebar-navigation li .fa {
@@ -191,6 +192,11 @@
   margin-bottom: 30px;
 }
 
+.panel-default.panel-admin {
+  width: 95%;
+  max-height: 525px;
+}
+
 .panel-heading {
   position: sticky;
   top: 0;
@@ -200,6 +206,14 @@
 .algn-right {
   float: right;
   padding-right: 2px;
+}
+
+.admin-table tr .admin-col {
+  padding-left: 15px;
+}
+
+td.admin-option {
+  text-align: center;
 }
 
 /* Table Styles */

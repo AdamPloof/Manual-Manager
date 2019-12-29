@@ -23,7 +23,7 @@ class Manual(models.Model):
     tags = models.CharField(max_length=150, blank=True, null=True)
     pub_date = models.DateTimeField('Date Published', auto_now_add=True)
     admin = models.ForeignKey(User, related_name='admin_of', null=True, on_delete=models.SET_NULL)
-    department = models.ForeignKey(Department, related_name='manual_department', null=True, on_delete=models.SET_NULL)
+    department = models.ForeignKey(Department, related_name='department', null=True, on_delete=models.SET_NULL)
     last_update = models.DateTimeField('Last Update', null=True, auto_now=True)
     last_update_by = models.ForeignKey(User, related_name='updated_by', null=True, on_delete=models.SET_NULL)
     next_update = models.DateTimeField('Next Update Due', null=True)
@@ -65,7 +65,6 @@ class Manual(models.Model):
 class Directory(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    department = models.ForeignKey(Department, related_name='dir_department', null=True, on_delete=models.SET_NULL)
     parent = TreeForeignKey(
     'self',
     null=True,

@@ -31,13 +31,3 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
-
-# add test so to check that user.is_staff
-@login_required
-def manage(request):
-    current_user = request.user
-    admin_of = current_user.admin_of.all()
-    context = {'admin_of': admin_of}
-
-    return render(request, 'users/manage.html', context)
- 

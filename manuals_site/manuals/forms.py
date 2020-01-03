@@ -36,3 +36,18 @@ class DirectoryUpdateForm(DirectoryForm):
         # Populate Parent selector with only nodes that are valid targets to move to
         super(DirectoryForm, self).__init__(*args, **kwargs)
         self.fields['parent'] = TreeNodeChoiceField(valid_move_nodes(node))
+
+class ManualAssignForm(BSModalForm):
+    class Meta:
+        model = Manual
+        fields = ['update_assigned_to']
+
+class ManualNextUpdateForm(BSModalForm):
+    class Meta:
+        model = Manual
+        fields = ['next_update']
+
+class ManualArchiveForm(BSModalForm):
+    class Meta:
+        model = Manual
+        fields = ['is_archived']

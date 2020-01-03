@@ -5,10 +5,19 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from .my_functions import reverse_query
 from .models import Manual, Directory
-from .forms import ManualForm, DirectoryForm, DirectoryUpdateForm
+from .forms import (
+    ManualForm,
+    ManualAssignForm,
+    ManualArchiveForm,
+    ManualNextUpdateForm,
+    DirectoryForm,
+    DirectoryUpdateForm
+)
+
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def index(request):
@@ -33,6 +42,15 @@ def index(request):
         else:
             # The request is not ajax; load the index page.
             return render(request, 'manuals/index.html', directories)
+
+# add test so to check that user.is_staff
+@login_required
+def manage(request):
+    current_user = request.user
+    admin_of = current_user.admin_of.all()
+    context = {'admin_of': admin_of}
+
+    return render(request, 'manuals/manage.html', context)
 
 class ManualDetail(DetailView):
     model = Manual
@@ -143,3 +161,42 @@ class DirectoryDelete(LoginRequiredMixin, BSModalDeleteView):
     def get_success_url(self):
         dir_id = self.request.GET.get('dir_id', default=1)
         return reverse_query('index', get={'dir_id': dir_id})
+
+class ManualAssign(LoginRequiredMixin, BSModalUpdateView):
+    form_class = ManualAssignForm
+    model = Manual
+    template_name = 'manuals/manual_manage_form.html'
+
+    success_message = 'Manual updated successfully'
+    success_url = reverse_lazy('manage')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Assign user for next update'
+        return context
+
+class ManualNextUpdate(LoginRequiredMixin, BSModalUpdateView):
+    form_class = ManualNextUpdateForm
+    model = Manual
+    template_name = 'manuals/manual_manage_form.html'
+
+    success_message = 'Manual updated successfully'
+    success_url = reverse_lazy('manage')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Change next update'
+        return context
+
+class ManualArchive(LoginRequiredMixin, BSModalUpdateView):
+    form_class = ManualArchiveForm
+    model = Manual
+    template_name = 'manuals/manual_manage_form.html'
+
+    success_message = 'Manual has been archived successfully'
+    success_url = reverse_lazy('manage')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Archive this manual?'
+        return context

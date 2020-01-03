@@ -3,6 +3,7 @@ $(document).ready(function() {
     scanDirectory();
     getCurrentDir();
     showDropdowns();
+    checkAdmin();
 });
 
 // Add an event listener to all folders and define the table to be refreshed.
@@ -84,10 +85,14 @@ function clearTable(myTable) {
 
 // Update the current directory id for use in the create-folder form
 function getCurrentDir() {
-    let current_folder = document.getElementsByClassName('file-root')[0];
-    let dir_id = current_folder.id.slice(3);
-    newManualDir(dir_id);
-    initModals(dir_id);
+    let dir_table = document.getElementById('dir-table')
+
+    if (dir_table) {
+        let current_folder = document.getElementsByClassName('file-root')[0];
+        let dir_id = current_folder.id.slice(3);
+        newManualDir(dir_id);
+        initModals(dir_id);
+    }
 }
 
 // Update the new manual link to include ?current-dir= param
@@ -165,3 +170,29 @@ function closeDropdowns() {
       }
     }
   } 
+
+function checkAdmin() {
+    let adminTable = document.getElementById('admin-table');
+
+    if (adminTable) {
+        initAdminModals();
+    }
+}
+
+function initAdminModals() {
+
+    // Call the modal form to assign Manual
+    $(".manual-assign").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+
+     // Call the modal form to modify the next update for Manual
+     $(".manual-next-update").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+
+     // Call the modal form to archive Manual
+     $(".manual-archive").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+}

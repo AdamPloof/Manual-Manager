@@ -192,11 +192,6 @@
   margin-bottom: 30px;
 }
 
-.panel-default.panel-admin {
-  width: 95%;
-  max-height: 525px;
-}
-
 .panel-heading {
   position: sticky;
   top: 0;
@@ -208,14 +203,6 @@
   padding-right: 2px;
 }
 
-.admin-table tr .admin-col {
-  padding-left: 15px;
-}
-
-td.admin-option {
-  text-align: center;
-}
-
 /* Table Styles */
 
 .thead-dark {
@@ -223,6 +210,11 @@ color: #fff;
 background-color:rgb(52, 66, 44);
 border-color:#1c2412;
 }
+
+.admin-head {
+  color: #333333;
+  background-color:#ebe9e9;
+  }
 
 a.folder-breadcrumb {
   color: rgba(255, 255, 255, 0.842);
@@ -281,7 +273,8 @@ a.folder-breadcrumb::after {
   padding-bottom: 2px;
 }
 
-.folder-dropdown {
+.folder-dropdown,
+.file-dropdown {
   position: relative;
   display: inline-block;
 }
@@ -296,28 +289,43 @@ a.folder-breadcrumb::after {
   right: 0;
 }
 
-.folder-update, .folder-delete {
+.drop-menu.drop-menu-file {
+  min-width: 95px;
+}
+
+.folder-update,
+.folder-delete,
+.file-update,
+.file-delete {
   font-size: 10pt;
   color: black;
   padding: 8px 12px;
   text-decoration: none;
   display: block;
+  border-radius: 2px;
 }
 
-.folder-delete {
+.folder-delete,
+.file-delete {
   background-color: rgb(231, 81, 81);
   color: white;
 }
 
-.folder-update:hover {
+.folder-update:hover,
+.file-update:hover {
   background-color: #ddd;
   text-decoration: none;
 }
 
-.folder-delete:hover {
+.folder-delete:hover,
+.file-delete:hover {
   background-color: rgb(196, 60, 60);
   color: white;
   text-decoration: none;
+}
+
+.file-update, .file-delete {
+  font-size: 85%;
 }
 
 .show-drop {

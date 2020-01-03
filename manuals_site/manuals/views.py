@@ -200,3 +200,9 @@ class ManualArchive(LoginRequiredMixin, BSModalUpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Archive this manual?'
         return context
+
+class ManualAdminDelete(LoginRequiredMixin, BSModalDeleteView):
+    model = Manual
+    template_name = 'manuals/manual_admin_confirm_delete.html'
+    success_message = 'Manual deleted successfully'
+    success_url = reverse_lazy('manage')

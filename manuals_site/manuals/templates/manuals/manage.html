@@ -1,76 +1,79 @@
 {% extends "manuals/header.html" %}
 {% block content %}
 
-<div class="content-section">
-    <!-- Manuals Admin Container -->
-      <!-- List group -->
-      <table id="admin-table" class="table table-striped table-hover table-bordered">
-        <thead class="admin-head">
-          <tr class="sticky-header">
-            <th class="admin-col">Title</th>
-            <th>Folder</th>
-            <th>Assigned</th>
-            <th>Next Update</th>
-            <th>Status</th>
-            <th>Options</th>
-          </tr>
-        </thead>
-        <tbody class="admin-body">
-        {% if admin_of %}
+  <!-- Stylesheet for Date Time Picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-          <!-- User is admin for manuals; populate the table -->
-          {% for manual in admin_of %}
-            {% if manual.update_status == "due_soon" %}
-              <tr class="warning">
-                <td class="admin-col">
-                  <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td>
-            {% elif manual.update_status == "overdue" %}
-              <tr class="danger">
-                <td class="admin-col">
-                  <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td>
-            {% else %}
-              <tr>
-                <td class="admin-col">
-                  <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td> 
-            {% endif %}
+  <div class="content-section">
+      <!-- Manuals Admin Container -->
+        <!-- List group -->
+        <table id="admin-table" class="table table-striped table-hover table-bordered">
+          <thead class="admin-head">
+            <tr class="sticky-header">
+              <th class="admin-col">Title</th>
+              <th>Folder</th>
+              <th>Assigned</th>
+              <th>Next Update</th>
+              <th>Status</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody class="admin-body">
+          {% if admin_of %}
 
-                <td><small class="text-muted">{{ manual.folder }}</small></td>
-                <td><small class="text-muted">{{ manual.update_assigned_to }}</small></td>
-                <td><small class="text-muted">{{ manual.next_update|date:"M. d, Y"  }}</small></td>
+            <!-- User is admin for manuals; populate the table -->
+            {% for manual in admin_of %}
+              {% if manual.update_status == "due_soon" %}
+                <tr class="warning">
+                  <td class="admin-col">
+                    <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td>
+              {% elif manual.update_status == "overdue" %}
+                <tr class="danger">
+                  <td class="admin-col">
+                    <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td>
+              {% else %}
+                <tr>
+                  <td class="admin-col">
+                    <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td> 
+              {% endif %}
 
-                <!-- Make update staus more readable -->
-                {% if manual.update_status == "due_soon" %}
-                  <td><small class="text-muted">Due soon</small></td>
-                {% elif manual.update_status == "overdue" %}
-                  <td><small class="text-muted">Overdue</small></td>
-                {% else %}
-                  <td><small class="text-muted">Up to date</small></td>
-                {% endif %}
+                  <td><small class="text-muted">{{ manual.folder }}</small></td>
+                  <td><small class="text-muted">{{ manual.update_assigned_to }}</small></td>
+                  <td><small class="text-muted">{{ manual.next_update|date:"M. d, Y"  }}</small></td>
 
-                  <td class="admin-option">
-                    <div class="file-dropdown">
-                      <a class="btn btn-sm btn-drop" href="#">...</a>
-                      <div class="drop-menu drop-menu-file">
-                        <a class="file-update manual-assign" data-pk="{{ manual.id }}" data-id="{% url 'manual-assign' manual.id %}" href="#">Assign</a>
-                        <a class="file-update manual-next-update" data-pk="{{ manual.id }}" data-id="{% url 'manual-next-update' manual.id %}" href="#">Next Update</a>
-                        <a class="file-update manual-archive" data-pk="{{ manual.id }}" data-id="{% url 'manual-archive' manual.id %}" href="#">Archive</a>
-                        <a class="file-delete" href="#">Delete</a>
+                  <!-- Make update staus more readable -->
+                  {% if manual.update_status == "due_soon" %}
+                    <td><small class="text-muted">Due soon</small></td>
+                  {% elif manual.update_status == "overdue" %}
+                    <td><small class="text-muted">Overdue</small></td>
+                  {% else %}
+                    <td><small class="text-muted">Up to date</small></td>
+                  {% endif %}
+
+                    <td class="admin-option">
+                      <div class="file-dropdown">
+                        <a class="btn btn-sm btn-drop" href="#">...</a>
+                        <div class="drop-menu drop-menu-file">
+                          <a class="file-update manual-assign" data-pk="{{ manual.id }}" data-id="{% url 'manual-assign' manual.id %}" href="#">Assign</a>
+                          <a class="file-update manual-next-update" data-pk="{{ manual.id }}" data-id="{% url 'manual-next-update' manual.id %}" href="#">Next Update</a>
+                          <a class="file-update manual-archive" data-pk="{{ manual.id }}" data-id="{% url 'manual-archive' manual.id %}" href="#">Archive</a>
+                          <a class="file-delete manual-admin-delete" data-pk="{{ manual.id }}" data-id="{% url 'manual-admin-delete' manual.id %}" href="#">Delete</a>
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
-              </tr>
-          {% endfor %}
+                </tr>
+            {% endfor %}
 
-          <!-- User is not admin for any manuals; display message -->
-          {% else %}
-          <tr><td>
-            <li class="list-group-item">You have not been assigned admin to any manuals.</li>
-          </td></tr>
-        {% endif %}
-        </tbody>
-      </table>
-
+            <!-- User is not admin for any manuals; display message -->
+            {% else %}
+            <tr><td>
+              <li class="list-group-item">You have not been assigned admin to any manuals.</li>
+            </td></tr>
+          {% endif %}
+          </tbody>
+        </table>
+  </div>
   <!-- Modal Form -->
   <div class="modal fade" tabindex="-1" role="dialog" id="modal">
     <div class="modal-dialog" role="document">

@@ -194,5 +194,18 @@ function initAdminModals() {
      // Call the modal form to archive Manual
      $(".manual-archive").each(function() {
         $(this).modalForm({formURL: $(this).data('id')});
+        loadDatePicker();
     });
+
+     // Call the modal form to delete the Manual
+     $(".manual-admin-delete").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+}
+
+function loadDatePicker() {
+    // Attach an event handler to Date input box
+    $("#modal").on('focus', '#id_next_update', function() {
+        $("#id_next_update").flatpickr();
+    })  
 }

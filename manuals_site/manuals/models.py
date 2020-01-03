@@ -41,16 +41,17 @@ class Manual(models.Model):
         return self.title
 
     def update_status(self):
+        now = timezone.now()
         status = [
             'up_to_date',
             'due_soon',
             'overdue'
         ]
 
-        if self.next_update - self.last_update >= datetime.timedelta(weeks=2):
+        if self.next_update - now >= datetime.timedelta(weeks=2):
             # manual is up to date
             return status[0]
-        elif self.next_update - self.last_update <= datetime.timedelta(days=0):
+        elif self.next_update - now <= datetime.timedelta(days=0):
             # manual is overdue
             return status[2]
         else:

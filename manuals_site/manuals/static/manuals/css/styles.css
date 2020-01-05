@@ -273,6 +273,10 @@ a.folder-breadcrumb::after {
   padding-bottom: 2px;
 }
 
+.btn-outline-info:hover {
+  background-color: rgb(224, 224, 224);
+}
+
 .folder-dropdown,
 .file-dropdown {
   position: relative;
@@ -410,6 +414,11 @@ ul.breadcrumb li a:hover {
   left: 200px;
   margin: auto;
   overflow: auto;
+}
+
+.admin-link:after {
+  padding-left: 4px;
+  content: "/";
 }
 
 /* Manual Layout */

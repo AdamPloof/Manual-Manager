@@ -1,4 +1,5 @@
 {% extends "manuals/header.html" %}
+{% load static %}
 {% block content %}
     <article class="media content-section">
         <div class="media-body">
@@ -22,13 +23,19 @@
                             <a class="mr-2" href="#">{{ manual.author }}</a>
                             <small class="text-muted">{{ manual.pub_date }}</small>
                         </div>
-                        {% if manual.author == user %}
+                        <!-- Will likely need to change this condition so all users can edit -->
+                        {% if manual.author == user or user.is_staff %}
                         <a class="btn btn-default btn-sm mt-6 mb-1" href="{% url 'manual-update' manual.id %}">Update</a>
                         <a class="btn btn-danger btn-sm mt-6 mb-1" href="{% url 'manual-delete' manual.id %}">Delete</a>
                         {% endif %}
                     </div>
                     <div class="article-update">
-                        <strong>Admin: </strong><a class="mr-2" href="#">{{ manual.admin }}</a>
+                        <span>
+                            <strong>Admin: </strong>
+                            {% for admin in manual.admin.all %}
+                                <a class="mr-2 admin-assigned" href="#">{{ admin }}</a>
+                            {% endfor %}
+                        </span>
                         <div class="article-metadata">
                             <strong>Last Update: </strong><a class="mr-2" href="#">{{ manual.last_update_by }}</a>
                             <small class="text-muted">{{ manual.last_update }}</small>
@@ -43,4 +50,5 @@
                 <p class="article-content">{{ manual.content|safe }}</p>
             </div>
     </article>
+    <script type="text/javascript" src="{% static 'manuals/js/manual_detail.js' %}"></script>
 {% endblock %}

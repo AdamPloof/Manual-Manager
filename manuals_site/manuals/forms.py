@@ -2,25 +2,27 @@ from django.forms import ModelForm
 from bootstrap_modal_forms.forms import BSModalForm
 from mptt.forms import TreeNodeChoiceField
 from .models import Manual, Directory
-from .my_functions import valid_move_nodes
+from .my_functions import valid_move_nodes, get_default_department
 from tinymce.widgets import TinyMCE
 
 class ManualForm(ModelForm):
     class Meta:
         model = Manual
-        fields = ['title', 'content', 'folder', 'tags']
+        fields = ['title', 'content', 'folder', 'tags', 'department']
         widgets = {
             'content': TinyMCE(attrs={'cols': 80, 'rows': 30})
         }
     
     def __init__(self, *args, **kwargs):
-        # Get current directory to set initial parent when creating new manuals
-        # Use set parent when updating manuals
         current_dir = kwargs.pop('current_dir', None)
+
         if current_dir:
+            # Get current directory to set initial parent directory when creating new manuals
             super(ManualForm, self).__init__(*args, **kwargs)
             self.initial['folder'] = current_dir
+            self.initial['department'] = get_default_department(current_dir)
         else:
+            # Use set directory when updating manuals
             super(ManualForm, self).__init__(*args, **kwargs)
 
 class DirectoryForm(BSModalForm):

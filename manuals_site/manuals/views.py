@@ -20,6 +20,7 @@ from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+
 def index(request):
     if request.method == 'GET':
         dir_id = int(request.GET.get('dir_id', default=1))
@@ -43,6 +44,7 @@ def index(request):
             # The request is not ajax; load the index page.
             return render(request, 'manuals/index.html', directories)
 
+
 # add test so to check that user.is_staff
 @login_required
 def manage(request):
@@ -52,10 +54,14 @@ def manage(request):
 
     return render(request, 'manuals/manage.html', context)
 
+
+# ** Manual Views **
+
 class ManualDetail(DetailView):
     model = Manual
     template_name = 'manuals/manual_detail.html'
     context_object_name = 'manual'    
+
 
 class ManualCreate(LoginRequiredMixin, CreateView):
     form_class = ManualForm
@@ -76,6 +82,7 @@ class ManualCreate(LoginRequiredMixin, CreateView):
         form.instance.next_update = now + datetime.timedelta(days=90)
         return super().form_valid(form)
 
+
 class ManualUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = ManualForm
     model = Manual
@@ -84,16 +91,17 @@ class ManualUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def form_valid(self, form):
         now = timezone.now()
-        form.instance.author = self.request.user
         form.instance.last_update_by = self.request.user
         form.instance.next_update = now + datetime.timedelta(days=90)
         return super().form_valid(form)
     
+    # will likely need to change or get rid of this function so all users can edit
     def test_func(self):
         manual = self.get_object()
-        if self.request.user == manual.author:
+        if self.request.user == manual.author or self.request.user.is_staff:
             return True
         return False
+
 
 class ManualDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Manual
@@ -104,6 +112,58 @@ class ManualDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == manual.author:
             return True
         return False
+
+
+class ManualAssign(LoginRequiredMixin, BSModalUpdateView):
+    form_class = ManualAssignForm
+    model = Manual
+    template_name = 'manuals/manual_manage_form.html'
+
+    success_message = 'Manual updated successfully'
+    success_url = reverse_lazy('manage')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Assign user for next update'
+        return context
+
+
+class ManualNextUpdate(LoginRequiredMixin, BSModalUpdateView):
+    form_class = ManualNextUpdateForm
+    model = Manual
+    template_name = 'manuals/manual_manage_form.html'
+
+    success_message = 'Manual updated successfully'
+    success_url = reverse_lazy('manage')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Change next update'
+        return context
+
+
+class ManualArchive(LoginRequiredMixin, BSModalUpdateView):
+    form_class = ManualArchiveForm
+    model = Manual
+    template_name = 'manuals/manual_manage_form.html'
+
+    success_message = 'Manual has been archived successfully'
+    success_url = reverse_lazy('manage')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Archive this manual?'
+        return context
+
+
+class ManualAdminDelete(LoginRequiredMixin, BSModalDeleteView):
+    model = Manual
+    template_name = 'manuals/manual_admin_confirm_delete.html'
+    success_message = 'Manual deleted successfully'
+    success_url = reverse_lazy('manage')
+
+
+# ** Directory Views **
 
 class DirectoryCreate(LoginRequiredMixin, BSModalCreateView):
     form_class = DirectoryForm
@@ -153,6 +213,7 @@ class DirectoryUpdate(LoginRequiredMixin, BSModalUpdateView):
         dir_id = self.request.GET.get('dir_id', default=1)
         return reverse_query('index', get={'dir_id': dir_id})
 
+
 class DirectoryDelete(LoginRequiredMixin, BSModalDeleteView):
     model = Directory
 
@@ -161,48 +222,3 @@ class DirectoryDelete(LoginRequiredMixin, BSModalDeleteView):
     def get_success_url(self):
         dir_id = self.request.GET.get('dir_id', default=1)
         return reverse_query('index', get={'dir_id': dir_id})
-
-class ManualAssign(LoginRequiredMixin, BSModalUpdateView):
-    form_class = ManualAssignForm
-    model = Manual
-    template_name = 'manuals/manual_manage_form.html'
-
-    success_message = 'Manual updated successfully'
-    success_url = reverse_lazy('manage')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Assign user for next update'
-        return context
-
-class ManualNextUpdate(LoginRequiredMixin, BSModalUpdateView):
-    form_class = ManualNextUpdateForm
-    model = Manual
-    template_name = 'manuals/manual_manage_form.html'
-
-    success_message = 'Manual updated successfully'
-    success_url = reverse_lazy('manage')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Change next update'
-        return context
-
-class ManualArchive(LoginRequiredMixin, BSModalUpdateView):
-    form_class = ManualArchiveForm
-    model = Manual
-    template_name = 'manuals/manual_manage_form.html'
-
-    success_message = 'Manual has been archived successfully'
-    success_url = reverse_lazy('manage')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Archive this manual?'
-        return context
-
-class ManualAdminDelete(LoginRequiredMixin, BSModalDeleteView):
-    model = Manual
-    template_name = 'manuals/manual_admin_confirm_delete.html'
-    success_message = 'Manual deleted successfully'
-    success_url = reverse_lazy('manage')

@@ -45,60 +45,45 @@ def profile_add_fav(request):
     
     if request.method == "POST":
         user = request.user
-        current_favs = user.profile.directory_favorites.all()
+        fav_type = request.POST.get('fav_type')
+        new_fav_id = int(request.POST.get('fav_add'))
 
-        new_fav_id = int(request.POST.get('add_fav'))
-        new_fav = Directory.objects.filter(pk=new_fav_id)
+        # Check if favorite is a directory
+        if fav_type == 'folder':
 
-        favs_list = current_favs | new_fav
+            # Check if directory is already in user's favorites
+            if not user.profile.directory_favorites.filter(pk=new_fav_id).exists():
+                new_fav = Directory.objects.filter(pk=new_fav_id)
+                current_favs = user.profile.directory_favorites.all()
+                favs_list = current_favs | new_fav
+                user.profile.directory_favorites.set(favs_list)
+                messages.success(request, f'Added {new_fav[0].name} to favorites!')
+            else:
+                messages.error(request, 'The selected folder is already in favorites', extra_tags='warning')
 
-        user.profile.directory_favorites.set(favs_list)
+        # Check if favorite is a manual
+        elif fav_type == 'file':
 
-        messages.success(request, f'Added {new_fav[0].name} to favorites!')
+            # Check if manual is already in user's favorites
+            if not user.profile.manual_favorites.filter(pk=new_fav_id).exists():
+                new_fav = Manual.objects.filter(pk=new_fav_id)
+                current_favs = user.profile.manual_favorites.all()
+                favs_list = current_favs | new_fav
+                user.profile.manual_favorites.set(favs_list)
+                messages.success(request, f'Added {new_fav[0].title} to favorites!')
+            else:
+                messages.error(request, 'The selected manual is already in favorites', extra_tags='warning')
+        
+        # Favorite is neither manual or directory
+        else:
+            messages.error(request, 'The favorite requested is invalid', extra_tags='danger')
 
-        # Append the current folder id as search query to the redirect url
-        dir_id = request.GET.get('dir_id')
-        redirect_url = reverse_query('index', get={'dir_id': dir_id})
-
-        return redirect(redirect_url)
-
+    # Request is not a POST request      
     else:
-        messages.error(request, 'The favorite requested is invalid' )
+        messages.error(request, 'The favorite requested is invalid', extra_tags='danger')
 
-        # Append the current folder id as search query to the redirect url
-        current_dir_id = request.GET.get('dir_id')
-        redirect_url = reverse_query('index', get={'dir_id': dir_id})
+    # Append the current folder id as search query to the redirect url
+    dir_id = request.GET.get('dir_id')
+    redirect_url = reverse_query('index', get={'dir_id': dir_id})
 
-        return redirect(redirect_url)
-
-
-# class ProfileAddFavFolder(LoginRequiredMixin, BSModalUpdateView):
-#     model = Profile
-#     form_class = AddFavoriteForm
-#     template_name = 'users/favorites_form.html'
-#     success_message = "Folder was added to your favorites"
-
-#     def get_form_kwargs(self):
-#         # Retrieve all the current favorites for folders for the current user
-
-#         user = self.request.user
-#         current_favs = user.profile.directory_favorites.all()
-#         new_fav_id = self.request.GET.get('node')
-#         new_fav = Directory.objects.filter(pk=new_fav_id)
-#         new_favs_list = current_favs | new_fav
-
-#         kwargs = super(ProfileAddFavFolder, self).get_form_kwargs()
-#         kwargs['favs'] = new_favs_list
-#         return kwargs
-
-#     def get_context_data(self, **kwargs):
-#         new_fav_id = self.request.GET.get('node')
-#         new_fav = Directory.objects.get(pk=new_fav_id)
-#         context = super().get_context_data(**kwargs)
-#         context['new_fav'] = new_fav
-#         context['title'] = 'Add Favorite'
-#         return context
-
-#     def get_success_url(self):
-#         dir_id = self.request.GET.get('dir_id', default=1)
-#         return reverse_query('index', get={'dir_id': dir_id})
+    return redirect(redirect_url)

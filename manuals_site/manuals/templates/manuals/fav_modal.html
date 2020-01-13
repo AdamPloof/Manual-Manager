@@ -7,7 +7,7 @@
                 <h4 class="modal-title">Add Favorite</h4>
             </div>
             <div class="modal-body">
-                <p>Add <i class="far fa-folder ms-2" aria-hidden="true"></i><strong id="fav-context">Placeholder</strong> to favorites?</p>
+                <p>Add <i id="fav-symbol" class="" aria-hidden="true"></i><strong id="fav-context">Placeholder</strong> to favorites?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" id="add-fav-btn" class="btn btn-primary">Add</button>
@@ -17,7 +17,8 @@
             <!-- Hidden form to be submitted with Favorite info -->
             <form style="display: none" action="{% url 'dir-fav' %}" method="POST" id="fav-form">
                 {% csrf_token %}
-                <input type="hidden" id="fav-id" name="add_fav" value="null"/>
+                <input type="hidden" id="fav-id-add" name="fav_add" value="null"/>
+                <input type="hidden" id="fav-id-type" name="fav_type" value="null"/>
             </form>
 
         </div><!-- /.modal-content -->

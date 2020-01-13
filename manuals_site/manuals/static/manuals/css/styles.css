@@ -309,7 +309,7 @@ a.folder-breadcrumb::after {
 .file-update,
 .file-delete,
 .folder-add-fav,
-.file.add-fav {
+.file-add-fav {
   font-size: 10pt;
   color: black;
   padding: 8px 12px;

@@ -51,7 +51,14 @@
             <tr>
             <td class="file-file"><a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td>
         {% endif %}
-            <td></td>
+            <td class="col-secondary">
+                <div class="folder-dropdown">
+                    <a class="btn btn-sm btn-drop" href="#">...</a>
+                    <div class="drop-menu">
+                        <a class="file-add-fav" data-pk="{{ manual.id }}" data-id="{{ manual.title }}" data-loc="{{ current_folder.id }}" href="#">Favorite</a>
+                    </div>
+                </div>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

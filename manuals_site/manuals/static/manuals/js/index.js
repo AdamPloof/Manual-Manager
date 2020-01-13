@@ -155,14 +155,20 @@ function initModals(dir_id) {
 
     // Call the modal form to Add Favorite for folder
     $(".folder-add-fav").click(function() {
-        let fav_id = $(this).data('pk');
-        let fav_name = $(this).data('id');
-        let current_dir = $(this).data('loc');
 
-        $('#fav-context').html(fav_name);
-        $("#fav-modal").modal('show');
+        // Change the glyphicon in the modal to folder
+        $("#fav-symbol").attr("class", "far fa-folder ms-2");
+        let fav_type = "folder";
+        getFavInfo(this, fav_type);
+    });
 
-        postAddFav(fav_id, current_dir);
+    // Call the modal form to Add Favorite for file
+    $(".file-add-fav").click(function() {
+
+        // Change the glyphicon in the modal to file
+        $("#fav-symbol").attr("class", "far fa-file ms-2");
+        let fav_type = "file";
+        getFavInfo(this, fav_type);
     });
 
     // Call the modal form to Delete folder
@@ -173,15 +179,30 @@ function initModals(dir_id) {
 }
 
 
-// If user choose to save favorite then submit the fav-form
-function postAddFav(fav_id, current_dir) {
-    // Set the form input value to the be the pk of the favorite to add
-    $('#fav-id').val(fav_id);
+function getFavInfo(fav_choice, fav_type) {
+    let fav_id = $(fav_choice).data('pk');
+    let fav_name = $(fav_choice).data('id');
+    let current_dir = $(fav_choice).data('loc');
 
+    $('#fav-context').html(fav_name);
+    $("#fav-modal").modal('show');
+
+    postAddFav(fav_id, current_dir, fav_type);
+}
+
+
+// If user choose to save favorite then submit the fav-form
+function postAddFav(fav_id, current_dir, fav_type) {
+    // Set the form input value to the be the pk of the favorite to add
+    $('#fav-id-add').val(fav_id);
+
+    // Add the type of fav to add (file or folder) to data-type on form input
+    $('#fav-id-type').val(fav_type);
+   
     // Add query string to the action url so that redirect goes to current folder
     let url = $('#fav-form').attr('action') + '?dir_id=' + current_dir;
     $('#fav-form').attr('action', url);
-
+   
     // Submit the form
     $('#add-fav-btn').click(function() {
         $('#fav-form').submit();

@@ -16,10 +16,13 @@
   }
   
   .sidebar-logo {
+    position: sticky;
     padding: 15px 15px 5px 30px;
     font-size: 20px;
     height: 55px;
     background-color: rgb(52, 66, 44);
+    z-index: 3;
+    top: 0;
   }
   
   .sidebar-navigation {
@@ -86,6 +89,10 @@
   
   .sidebar-navigation .header::before {
     background-color: transparent;
+  }
+
+  .favorites {
+    font-size: 90%;
   }
 
 .content-container {
@@ -300,7 +307,9 @@ a.folder-breadcrumb::after {
 .folder-update,
 .folder-delete,
 .file-update,
-.file-delete {
+.file-delete,
+.folder-add-fav,
+.file.add-fav {
   font-size: 10pt;
   color: black;
   padding: 8px 12px;
@@ -316,7 +325,9 @@ a.folder-breadcrumb::after {
 }
 
 .folder-update:hover,
-.file-update:hover {
+.file-update:hover,
+.folder-add-fav:hover,
+.file-add-fav:hover {
   background-color: #ddd;
   text-decoration: none;
 }
@@ -377,6 +388,11 @@ ul.breadcrumb li a:hover {
 
 .mb-1 {
   margin-bottom: 1px;
+}
+
+.ms-4 {
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 /* Update/Assignment manual header */

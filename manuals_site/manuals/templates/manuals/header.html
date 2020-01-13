@@ -53,7 +53,7 @@
               Manuals Toolbar
             </div>
             <ul class="sidebar-navigation">
-              <li class="header">Finance</li>
+              <li class="header">Tools</li>
               <li>
                 <a href="{% url 'index' %}">
                   <i class="fa fa-home" aria-hidden="true"></i> Home
@@ -69,22 +69,26 @@
                   <i class="far fa-folder" aria-hidden="true"></i> New Folder
                 </a>
               </li>
-              <li class="header">Favorites</li>
-              <li>
-                <a href="#">
-                  <i class="fas fa-receipt" aria-hidden="true"></i> Accounts Payable
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fas fa-cash-register" aria-hidden="true"></i> Accounts Receivable
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fas fa-money-check" aria-hidden="true"></i> Payroll
-                </a>
-              </li>
+              <li class="header">Favorite Folders</li>
+
+              {% for dir_fav in user.profile.directory_favorites.all %}
+                <li>
+                  <a class="folder favorites favorites-folder" id="pk-{{ dir_fav.id }}" href="#">
+                    <i class="far fa-folder" aria-hidden="true"></i> {{ dir_fav.name }}
+                  </a>
+                </li>
+              {% endfor %}
+             
+              <li class="header">Favorite Manuals</li>
+
+              {% for man_fav in user.profile.manual_favorites.all %}
+                <li>
+                  <a class="favorites favorites-manual" href="{% url 'manual-detail' man_fav.id %}">
+                    <i class="far fa-file" aria-hidden="true"></i> {{ man_fav.title }}
+                  </a>
+                </li>
+              {% endfor %}
+
             </ul>
           </div>
           

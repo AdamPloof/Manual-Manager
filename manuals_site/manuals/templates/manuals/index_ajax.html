@@ -28,6 +28,7 @@
                         <a class="btn btn-sm btn-drop" href="#">...</a>
                         <div class="drop-menu">
                             <a class="folder-update" data-pk="{{ directory.id }}" data-id="{% url 'dir-update' directory.id %}" href="#">Update</a>
+                            <a class="folder-add-fav" data-pk="{{ directory.id }}" data-id="{{ directory.name }}" data-loc="{{ current_folder.id }}" href="#">Favorite</a>
                             <a class="folder-delete" data-pk="{{ directory.id }}" data-id="{% url 'dir-delete' directory.id %}" href="#">Delete</a>
                         </div>
                     </div>

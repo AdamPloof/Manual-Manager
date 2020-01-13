@@ -1,0 +1,25 @@
+<!-- Fav Modal Form -->
+<div id="fav-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Favorite</h4>
+            </div>
+            <div class="modal-body">
+                <p>Add <i class="far fa-folder ms-2" aria-hidden="true"></i><strong id="fav-context">Placeholder</strong> to favorites?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="add-fav-btn" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+
+            <!-- Hidden form to be submitted with Favorite info -->
+            <form style="display: none" action="{% url 'dir-fav' %}" method="POST" id="fav-form">
+                {% csrf_token %}
+                <input type="hidden" id="fav-id" name="add_fav" value="null"/>
+            </form>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -3,7 +3,7 @@ $(document).ready(function() {
     scanDirectory();
     getCurrentDir();
     showDropdowns();
-    checkAdmin();
+    checkModals();
 });
 
 
@@ -86,6 +86,7 @@ function changeDir(folder, opt_args = null) {
             scanDirectory();
             getCurrentDir();
             showDropdowns();
+            checkModals();
         }
         else {
             console.log('Could not retrieve anything');
@@ -129,7 +130,6 @@ function newManualDir(current_dir) {
         new_manual_btn.href +=query_string;
     }
     else {
-        console.log(url);
         let query_string = url.search;
         let search_params = new URLSearchParams(query_string);
         search_params.set('current_dir', current_dir);
@@ -153,8 +153,33 @@ function initModals(dir_id) {
         $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id + "&node=" + node});
     });
 
-    // Call the modal form to Add Favorite for folder
-    $(".folder-add-fav").click(function() {
+    // Call the modal form to Delete folder
+    $(".folder-delete").each(function() {
+        let node = $(this).data('pk');
+        $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id + "&node=" + node});
+    });
+}
+
+
+function checkModals() {
+    // Determine which triggers need to be instantiated
+    let adminTable = document.getElementById('admin-table');
+    let fav_table = document.getElementById("fav-manual-table");
+    let dir_table = getDirTable();
+
+    if (adminTable) {
+        initAdminModals();
+    }
+    else if (fav_table || dir_table) {
+        initFavModals();
+    }
+}
+
+
+function initFavModals() {
+
+    // Call the modal form to Add/Remove Favorite for folder
+    $(".folder-add-fav, .folder-remove-fav").click(function() {
 
         // Change the glyphicon in the modal to folder
         $("#fav-symbol").attr("class", "far fa-folder ms-2");
@@ -162,19 +187,38 @@ function initModals(dir_id) {
         getFavInfo(this, fav_type);
     });
 
-    // Call the modal form to Add Favorite for file
-    $(".file-add-fav").click(function() {
+    // Call the modal form to Add/Remove Favorite for file
+    $(".file-add-fav, .file-remove-fav").click(function() {
 
         // Change the glyphicon in the modal to file
         $("#fav-symbol").attr("class", "far fa-file ms-2");
         let fav_type = "file";
         getFavInfo(this, fav_type);
     });
+}
 
-    // Call the modal form to Delete folder
-    $(".folder-delete").each(function() {
-        let node = $(this).data('pk');
-        $(this).modalForm({formURL: $(this).data('id') + "?dir_id=" + dir_id + "&node=" + node});
+
+function initAdminModals() {
+
+    // Call the modal form to assign Manual
+    $(".manual-assign").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+
+     // Call the modal form to modify the next update for Manual
+     $(".manual-next-update").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+
+     // Call the modal form to archive Manual
+     $(".manual-archive").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
+        loadDatePicker();
+    });
+
+     // Call the modal form to delete the Manual
+     $(".manual-admin-delete").each(function() {
+        $(this).modalForm({formURL: $(this).data('id')});
     });
 }
 
@@ -187,27 +231,31 @@ function getFavInfo(fav_choice, fav_type) {
     $('#fav-context').html(fav_name);
     $("#fav-modal").modal('show');
 
-    postAddFav(fav_id, current_dir, fav_type);
+    postFav(fav_id, current_dir, fav_type);
 }
 
 
 // If user choose to save favorite then submit the fav-form
-function postAddFav(fav_id, current_dir, fav_type) {
+function postFav(fav_id, current_dir, fav_type) {
     // Set the form input value to the be the pk of the favorite to add
-    $('#fav-id-add').val(fav_id);
+    $('#fav-id').val(fav_id);
 
     // Add the type of fav to add (file or folder) to data-type on form input
-    $('#fav-id-type').val(fav_type);
+    $('#fav-type').val(fav_type);
    
-    // Add query string to the action url so that redirect goes to current folder
-    let url = $('#fav-form').attr('action') + '?dir_id=' + current_dir;
-    $('#fav-form').attr('action', url);
-   
+    // If called from index page add query string to the action url
+    // so that redirect goes to current folder
+    if (current_dir) {
+        let url = $('#fav-form').attr('action') + '?dir_id=' + current_dir;
+        $('#fav-form').attr('action', url);
+    }
+
     // Submit the form
     $('#add-fav-btn').click(function() {
         $('#fav-form').submit();
     })
 }
+
 
 // Show the dropdown for update/delete folders
 function showDropdowns() {
@@ -246,40 +294,6 @@ function closeDropdowns() {
       }
     }
   } 
-
-
-function checkAdmin() {
-    let adminTable = document.getElementById('admin-table');
-
-    if (adminTable) {
-        initAdminModals();
-    }
-}
-
-
-function initAdminModals() {
-
-    // Call the modal form to assign Manual
-    $(".manual-assign").each(function() {
-        $(this).modalForm({formURL: $(this).data('id')});
-    });
-
-     // Call the modal form to modify the next update for Manual
-     $(".manual-next-update").each(function() {
-        $(this).modalForm({formURL: $(this).data('id')});
-    });
-
-     // Call the modal form to archive Manual
-     $(".manual-archive").each(function() {
-        $(this).modalForm({formURL: $(this).data('id')});
-        loadDatePicker();
-    });
-
-     // Call the modal form to delete the Manual
-     $(".manual-admin-delete").each(function() {
-        $(this).modalForm({formURL: $(this).data('id')});
-    });
-}
 
 
 function loadDatePicker() {

@@ -73,7 +73,7 @@
 
               {% for dir_fav in user.profile.directory_favorites.all %}
                 <li>
-                  <a class="folder favorites favorites-folder" id="pk-{{ dir_fav.id }}" href="#">
+                  <a class="favorites favorites-folder" href="{% url 'index' %}?dir_id={{ dir_fav.id }}">
                     <i class="far fa-folder" aria-hidden="true"></i> {{ dir_fav.name }}
                   </a>
                 </li>

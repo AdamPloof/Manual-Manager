@@ -39,7 +39,7 @@ def index(request):
 
         if request.is_ajax():
             # The request is ajax; refresh the directory table.
-            return render(request, 'manuals/index_ajax.html', directories)
+            return render(request, 'manuals/index_table.html', directories)
         else:
             # The request is not ajax; load the index page.
             return render(request, 'manuals/index.html', directories)

@@ -13,7 +13,9 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('register/', user_views.register, name="register"),
     path('profile/', user_views.profile, name='profile' ),
-    path('profile/fav-folder/', user_views.profile_add_fav, name='dir-fav'),
+    path('profile/favorites/', user_views.manage_favs, name='favorites'),
+    path('profile/favorites/update/', user_views.profile_add_fav, name='fav-update'),
+    path('profile/favorites/remove/', user_views.profile_remove_fav, name='fav-remove'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
 ]

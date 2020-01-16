@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('cd/', views.index, name='index-ajax'),
+    path('cd/', views.index, name='index-table'),
     path('manage/', views.manage, name='manage' ),
     path('manual/new-folder', views.DirectoryCreate.as_view(), name='dir-create'),
     path('manual/<int:pk>/update-folder', views.DirectoryUpdate.as_view(), name='dir-update'),

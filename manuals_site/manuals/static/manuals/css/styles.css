@@ -272,6 +272,10 @@ a.folder-breadcrumb::after {
   width: 5%;
 }
 
+.col-options {
+  width: 127px;
+}
+
 /* Dropdown for update and delete buttons on folders */
 
 .btn-drop {
@@ -319,7 +323,9 @@ a.folder-breadcrumb::after {
 }
 
 .folder-delete,
-.file-delete {
+.file-delete,
+.file-remove-fav,
+.folder-remove-fav {
   background-color: rgb(231, 81, 81);
   color: white;
 }
@@ -333,7 +339,9 @@ a.folder-breadcrumb::after {
 }
 
 .folder-delete:hover,
-.file-delete:hover {
+.file-delete:hover,
+.file-remove-fav:hover,
+.folder-remove-fav:hover {
   background-color: rgb(196, 60, 60);
   color: white;
   text-decoration: none;

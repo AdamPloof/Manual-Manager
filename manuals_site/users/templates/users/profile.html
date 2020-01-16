@@ -7,6 +7,8 @@
       <div class="media-body">
         <h2 class="account-heading">{{ user.username }}</h2>
         <p class="text-secondary">{{ user.email }}</p>
+        <p class="text-secondary small"><h6><a href="{% url 'favorites' %}">Manage Favorites</a></h6></p>
+        <p class="text-secondary small"><h6><a href="#">Preferences</a></h6></p>
         <div class="border-top pt-3">
           <small><a href="{% url 'logout' %}">Log out</a></small>
         </div>

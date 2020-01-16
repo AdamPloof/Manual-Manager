@@ -1,0 +1,120 @@
+{% extends "manuals/header.html" %}
+{% block content %}
+
+  <!-- Stylesheet for Date Time Picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <div class="content-section">
+      <!-- Favorites Container -->
+        <!-- Manual Favorites Table -->
+        <table id="fav-manual-table" class="table table-striped table-hover table-bordered">
+          <thead class="admin-head">
+            <tr class="sticky-header">
+              <th class="admin-col">Title</th>
+              <th>Folder</th>
+              <th>Assigned</th>
+              <th>Next Update</th>
+              <th>Status</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody class="admin-body">
+
+          {% if man_favs %}
+            <!-- User has favorite manuals; populate the table -->
+            {% for manual in man_favs %}
+              {% if manual.update_status == "due_soon" %}
+                <tr class="warning">
+                  <td class="admin-col">
+                    <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td>
+              {% elif manual.update_status == "overdue" %}
+                <tr class="danger">
+                  <td class="admin-col">
+                    <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td>
+              {% else %}
+                <tr>
+                  <td class="admin-col">
+                    <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td> 
+              {% endif %}
+
+                  <td><small class="text-muted">{{ manual.folder }}</small></td>
+                  <td><small class="text-muted">{{ manual.update_assigned_to }}</small></td>
+                  <td><small class="text-muted">{{ manual.next_update|date:"M. d, Y"  }}</small></td>
+
+                  <!-- Make update staus more readable -->
+                  {% if manual.update_status == "due_soon" %}
+                    <td><small class="text-muted">Due soon</small></td>
+                  {% elif manual.update_status == "overdue" %}
+                    <td><small class="text-muted">Overdue</small></td>
+                  {% else %}
+                    <td><small class="text-muted">Up to date</small></td>
+                  {% endif %}
+
+                    <td class="admin-option">
+                      <div class="file-dropdown">
+                        <a class="btn btn-sm btn-drop" href="#">...</a>
+                        <div class="drop-menu drop-menu-file">
+                          <a class="file-update file-remove-fav" data-pk="{{ manual.id }}" data-id="{{ manual.title }}" href="#">Remove Favorite</a>
+                          <a class="file-update" href="{% url 'manual-detail' manual.id %}">View Manual</a>
+                        </div>
+                      </div>
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+            <!-- User has no favorite manuals; display message -->
+            {% else %}
+            <tr><td>
+              <li class="list-group-item">You currently have no Manuals in you Favorites</li>
+            </td></tr>
+          {% endif %}
+          </tbody>
+        </table>
+
+  <br>
+
+        <!-- Directory Favorites Table -->
+        <table id="fav-dir-table" class="table table-striped table-hover table-bordered">
+          <thead class="admin-head">
+            <tr class="sticky-header">
+              <th class="admin-col">Folder</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody class="admin-body">
+
+        {% if dir_favs %}
+            <!-- User has favorite directories; populate the table -->
+            {% for dir in dir_favs %}
+                <tr>
+                  <td class="admin-col">
+                    <a href="{% url 'index' %}?dir_id={{ dir.id }}">{{ dir.name }}</a>
+                  </td> 
+
+                    <td class="admin-option col-options">
+                      <div class="file-dropdown">
+                        <a class="btn btn-sm btn-drop" href="#">...</a>
+                        <div class="drop-menu drop-menu-file">
+                          <a class="file-update folder-remove-fav" data-pk="{{ dir.id }}" data-id="{{ dir.name }}" href="#">Remove Favorite</a>
+                          <a class="file-update" href="{% url 'index' %}?dir_id={{ dir.id }}">Go to Folder</a>
+                        </div>
+                      </div>
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+            <!-- User has no favorite directories; display message -->
+            {% else %}
+            <tr><td>
+              <li class="list-group-item">You currently have no Folders in you Favorites</li>
+            </td></tr>
+          {% endif %}
+          </tbody>
+        </table>
+  </div>
+  
+  {% include "manuals/fav_remove_modal.html" %}
+
+{% endblock %}

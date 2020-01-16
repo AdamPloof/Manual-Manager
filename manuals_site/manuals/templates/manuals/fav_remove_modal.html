@@ -7,15 +7,15 @@
                 <h4 class="modal-title">Add Favorite</h4>
             </div>
             <div class="modal-body">
-                <p>Add &nbsp;<i id="fav-symbol" class="" aria-hidden="true"></i>&nbsp;<strong id="fav-context">Placeholder</strong> to favorites?</p>
+                <p>Are you sure you want to remove &nbsp;<i id="fav-symbol" class="" aria-hidden="true"></i>&nbsp;<strong id="fav-context">Placeholder</strong> from favorites?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="add-fav-btn" class="btn btn-primary">Add</button>
+                <button type="button" id="add-fav-btn" class="btn btn-danger">Remove</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
 
             <!-- Hidden form to be submitted with Favorite info -->
-            <form style="display: none" action="{% url 'fav-update' %}" method="POST" id="fav-form">
+            <form style="display: none" action="{% url 'fav-remove' %}" method="POST" id="fav-form">
                 {% csrf_token %}
                 <input type="hidden" id="fav-id" name="fav_id" value="null"/>
                 <input type="hidden" id="fav-type" name="fav_type" value="null"/>

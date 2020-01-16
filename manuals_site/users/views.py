@@ -45,6 +45,13 @@ def profile(request):
 
 
 @login_required
+def preferences(request):
+    user = request.user
+
+    return render(request, 'users/preferences.html')
+
+
+@login_required
 def manage_favs(request):
     user = request.user
     dir_favs = user.profile.directory_favorites.all()

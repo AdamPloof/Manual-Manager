@@ -2,13 +2,14 @@
 {% block content %}
 
 <div class="content-section">
+  <h1 class="profile-title">{{ user.username }}'s Profile</h1>
     <div class="media account-info">
       <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
       <div class="media-body">
         <h2 class="account-heading">{{ user.username }}</h2>
         <p class="text-secondary">{{ user.email }}</p>
         <p class="text-secondary small"><h6><a href="{% url 'favorites' %}">Manage Favorites</a></h6></p>
-        <p class="text-secondary small"><h6><a href="#">Preferences</a></h6></p>
+        <p class="text-secondary small"><h6><a href="{% url 'preferences' %}">Preferences</a></h6></p>
         <div class="border-top pt-3">
           <small><a href="{% url 'logout' %}">Log out</a></small>
         </div>

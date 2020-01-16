@@ -54,6 +54,15 @@ def manage(request):
 
     return render(request, 'manuals/manage.html', context)
 
+@login_required
+def assignments(request):
+    current_user = request.user
+    assigned = current_user.assigned_to.all()
+    context = {'assigned': assigned}
+
+    return render(request, 'manuals/assignments.html', context)
+
+
 
 # ** Manual Views **
 

@@ -5,10 +5,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
   <div class="content-section">
-    <h1>Admin</h1>
-      <!-- Manuals Admin Container -->
-        <!-- List group -->
-        <table id="admin-table" class="table table-striped table-hover table-bordered">
+      <h1>Assignments</h1>
+      <!-- Favorites Container -->
+        <!-- Manual Favorites Table -->
+        <table id="fav-manual-table" class="table table-striped table-hover table-bordered">
           <thead class="admin-head">
             <tr class="sticky-header">
               <th class="admin-col">Title</th>
@@ -20,10 +20,10 @@
             </tr>
           </thead>
           <tbody class="admin-body">
-          {% if admin_of %}
 
-            <!-- User is admin for manuals; populate the table -->
-            {% for manual in admin_of %}
+          {% if assigned %}
+            <!-- User has favorite manuals; populate the table -->
+            {% for manual in assigned %}
               {% if manual.update_status == "due_soon" %}
                 <tr class="warning">
                   <td class="admin-col">
@@ -55,10 +55,8 @@
                       <div class="file-dropdown">
                         <a class="btn btn-sm btn-drop" href="#">...</a>
                         <div class="drop-menu drop-menu-file">
-                          <a class="file-update manual-assign" data-pk="{{ manual.id }}" data-id="{% url 'manual-assign' manual.id %}" href="#">Assign</a>
-                          <a class="file-update manual-next-update" data-pk="{{ manual.id }}" data-id="{% url 'manual-next-update' manual.id %}" href="#">Next Update</a>
-                          <a class="file-update manual-archive" data-pk="{{ manual.id }}" data-id="{% url 'manual-archive' manual.id %}" href="#">Archive</a>
-                          <a class="file-delete manual-admin-delete" data-pk="{{ manual.id }}" data-id="{% url 'manual-admin-delete' manual.id %}" href="#">Delete</a>
+                          <a class="file-update" href="{% url 'manual-detail' manual.id %}">View</a>
+                          <a class="file-update" href="{% url 'manual-update' manual.id %}">Update</a>
                         </div>
                       </div>
                     </td>
@@ -66,22 +64,16 @@
                 </tr>
             {% endfor %}
 
-            <!-- User is not admin for any manuals; display message -->
+            <!-- User has no favorite manuals; display message -->
             {% else %}
             <tr><td>
-              <li class="list-group-item">You have not been assigned admin to any manuals.</li>
+              <li class="list-group-item">You currently have no Manuals assigned</li>
             </td></tr>
           {% endif %}
           </tbody>
         </table>
   </div>
-  <!-- Modal Form -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
   
-      </div>
-    </div>
-  </div>
+  {% include "manuals/fav_remove_modal.html" %}
 
 {% endblock %}

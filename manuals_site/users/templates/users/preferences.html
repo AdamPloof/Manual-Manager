@@ -1,0 +1,23 @@
+{% extends "manuals/header.html" %}
+{% block content %}
+
+        <div class="content-section">
+            <h1 class="preferences-title">{{ user.username }}'s Preferences</h1>
+              <div class="media account-info">
+                <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+                <div class="media-body">
+                  <h2 class="account-heading">{{ user.username }}</h2>
+                  <p class="text-secondary">{{ user.email }}</p>
+                  <div class="border-top pt-3">
+                    <small><a href="{% url 'logout' %}">Log out</a></small>
+                  </div>
+                </div>
+              </div>
+              <ul class="list-unstyled">
+                <li><a href="#">Change Email</a></li>
+                <li><a href="#">Change Account Image</a></li>
+                <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
+            </ul>
+        </div>
+
+{% endblock %}

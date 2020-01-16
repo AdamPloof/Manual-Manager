@@ -205,6 +205,11 @@
   z-index: 1;
 }
 
+.profile-title {
+  position: relative;
+  left: 10px;
+}
+
 .algn-right {
   float: right;
   padding-right: 2px;
@@ -407,6 +412,10 @@ ul.breadcrumb li a:hover {
 
 .media-body {
   padding: 8px;
+}
+
+.account-info {
+  top: 69px;
 }
 
 .article-head {

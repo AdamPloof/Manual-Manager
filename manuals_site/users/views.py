@@ -1,15 +1,29 @@
+
 from django.shortcuts import (
     render,
+    reverse,
     redirect,
     get_object_or_404,
 )
+
+from django.contrib.auth.models import User
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic.edit import UpdateView
 from bootstrap_modal_forms.generic import BSModalUpdateView
 
-from .forms import UserRegisterForm, AddFavoriteForm
+from .forms import (
+    UserRegisterForm,
+    AddFavoriteForm,
+    ProfileChangeImageForm,
+    UserUpdateForm
+)
+
 from .models import Profile
+
 from manuals.models import Directory, Manual
 from manuals.my_functions import reverse_query
 
@@ -155,3 +169,41 @@ def profile_remove_fav(request):
         messages.error(request, 'The favorite requested is invalid', extra_tags='danger')
 
     return redirect('favorites')
+
+
+# This exists in case there's a future possibility that user fields
+# Path to this form can be turned on/off in Settings
+class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    form_class = UserUpdateForm
+    model = User
+    template_name = 'users/user_update.html'
+
+    def get_success_url(self):
+        return reverse('preferences')
+
+    def test_func(self):
+        user = self.request.user
+        self.object = self.get_object()
+
+        if user == self.object:
+            return True
+        else:
+            return False
+
+
+class ProfileUpdateImageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    form_class = ProfileChangeImageForm
+    model = Profile
+    template_name = 'users/profile_change_image.html'
+
+    def get_success_url(self):
+        return reverse('preferences')
+
+    def test_func(self):
+        user_profile = self.request.user.profile
+        self.object = self.get_object()
+
+        if user_profile == self.object:
+            return True
+        else:
+            return False

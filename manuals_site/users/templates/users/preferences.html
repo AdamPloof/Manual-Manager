@@ -14,8 +14,15 @@
                 </div>
               </div>
               <ul class="list-unstyled">
-                <li><a href="#">Change Email</a></li>
-                <li><a href="#">Change Account Image</a></li>
+
+                <!-- For the 'user_update path' to work ALLOW_USER_FIELD_UPDATES 
+                      must be set to True in Setttings ' -->
+                
+                {% comment 'Optional path for user updates' %}
+                <!-- <li><a href="{% url 'user_update' user.id %}">Change Email</a></li> -->
+                {% endcomment %}
+
+                <li><a href="{% url 'change_image' user.profile.id %}">Change Account Image</a></li>
                 <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
             </ul>
         </div>

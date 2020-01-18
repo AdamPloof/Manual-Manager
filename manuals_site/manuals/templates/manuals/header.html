@@ -28,11 +28,11 @@
       </ul>
       <ul class="nav nav-pills navbar-right">
         {% if user.is_authenticated %}
-          <li><a href="{% url 'logout' %}">Log out</a></li>
-          <li><a href="{% url 'profile' %}">{{ user.username }}</a></li>
+          <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+          <li><a href="{% url 'profile' %}"><i class="fas fa-user-astronaut"></i> {{ user.username }}</a></li>
         {% else %}
-          <li><a href="{% url 'login' %}">Log in</a></li>
-          <li><a href="{% url 'register' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Log in</a></li>
+          <li><a href="{% url 'register' %}"><i class="fas fa-door-open"></i> Sign Up</a></li>
         {% endif %}
       </ul>
       <form class="navbar-form navbar-left" action="/action_page.php">

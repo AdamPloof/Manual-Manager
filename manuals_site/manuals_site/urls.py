@@ -15,6 +15,7 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile' ),
     path('profile/favorites/', user_views.manage_favs, name='favorites'),
     path('profile/preferences/', user_views.preferences, name='preferences'),
+    path('profile/<int:pk>/change-image/', user_views.ProfileUpdateImageView.as_view(), name='change_image'),
     path('profile/favorites/update/', user_views.profile_add_fav, name='fav-update'),
     path('profile/favorites/remove/', user_views.profile_remove_fav, name='fav-remove'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
@@ -27,3 +28,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.ALLOW_USER_FIELD_UPDATES:
+    # In case there's ever a need to update fields on the User model:
+    urlpatterns.append(path('user/<int:pk>/update/', user_views.UserUpdateView.as_view(), name='user_update'))

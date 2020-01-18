@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -18,6 +19,20 @@ class UserRegisterForm(UserCreationForm):
             'password1',
             'password2',
         ]
+
+
+# This exists in case there's a future possibility that user fields
+# Path to this form can be turned on/off in Settings
+class UserUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['email']
+
+
+class ProfileChangeImageForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
 
 
 class AddFavoriteForm(BSModalForm):

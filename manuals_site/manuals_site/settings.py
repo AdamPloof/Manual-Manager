@@ -146,3 +146,9 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+
+# Custom Settings
+
+# Setting this to True adds a path to urls.py that links to UserUpdateForm
+ALLOW_USER_FIELD_UPDATES = False

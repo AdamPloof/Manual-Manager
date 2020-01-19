@@ -28,7 +28,7 @@ def index(request):
 
         children = current_folder.get_children()
         ancestors = current_folder.get_ancestors()
-        manuals = current_folder.manuals.all()
+        manuals = current_folder.manuals(manager='active_objects').all()
 
         directories = {
             'directories': children,
@@ -61,6 +61,14 @@ def assignments(request):
     context = {'assigned': assigned}
 
     return render(request, 'manuals/assignments.html', context)
+
+
+@login_required
+def archive(request):
+    archived = Manual.objects.filter(is_archived=True)
+    context = {'archived': archived}
+
+    return render(request, 'manuals/archive.html', context)
 
 
 
@@ -162,6 +170,21 @@ class ManualArchive(LoginRequiredMixin, BSModalUpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Archive this manual?'
+        return context
+
+
+
+class ManualRestore(LoginRequiredMixin, BSModalUpdateView):
+    form_class = ManualArchiveForm
+    model = Manual
+    template_name = 'manuals/manual_manage_form.html'
+
+    success_message = 'Manual has been restored successfully'
+    success_url = reverse_lazy('archive')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Restore this manual?'
         return context
 
 

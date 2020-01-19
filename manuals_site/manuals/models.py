@@ -7,6 +7,8 @@ from django.urls import reverse
 
 from mptt.models import MPTTModel, TreeForeignKey
 
+from .managers import ManualActiveManager
+
 
 class Department(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -58,6 +60,9 @@ class Manual(models.Model):
             # manual is coming due soon
             return status[1]
         
+    # Managers
+    objects = models.Manager()
+    active_objects = ManualActiveManager()
 
     def get_absolute_url(self):
         return reverse('manual-detail', kwargs={'pk': self.pk})

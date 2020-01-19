@@ -25,6 +25,7 @@
           <li><a href="{% url 'manage' %}"><strong>Admin</strong></a></li>
         {% endif %} 
         <li><a href="{% url 'assignments' %}"><strong>Assignments</strong></a></li>
+        <li><a class="archive-link" href="{% url 'archive' %}"><strong>Archive</strong></a></li>
       </ul>
       <ul class="nav nav-pills navbar-right">
         {% if user.is_authenticated %}

@@ -166,6 +166,10 @@
   top: 2px;
 }
 
+.navbar-default .navbar-nav li .archive-link {
+  font-size: 85%;
+}
+
 /* Account image */
 .rounded-circle {
   border: 1px solid #ddd;

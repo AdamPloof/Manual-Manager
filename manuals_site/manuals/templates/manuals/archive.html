@@ -1,0 +1,74 @@
+{% extends "manuals/header.html" %}
+{% block content %}
+    <div class="content-section">
+        <h1>Archive</h1>
+        <!-- Favorites Container -->
+        <!-- Manual Favorites Table -->
+        <table id="admin-table" class="table table-striped table-hover table-bordered">
+            <thead class="admin-head">
+            <tr class="sticky-header">
+                <th class="admin-col">Title</th>
+                <th>Folder</th>
+                <th>Status</th>
+                <th>Options</th>
+            </tr>
+            </thead>
+            <tbody class="admin-body">
+
+            {% if archived %}
+            <!-- User has favorite manuals; populate the table -->
+            {% for manual in archived %}
+                <tr>
+                    <td class="admin-col">
+                    <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></td> 
+                    <td><small class="text-muted">{{ manual.folder }}</small></td>
+
+                    <!-- Make update staus more readable -->
+                    {% if manual.update_status == "due_soon" %}
+                    <td><small class="text-muted">Due soon</small></td>
+                    {% elif manual.update_status == "overdue" %}
+                    <td><small class="text-muted">Overdue</small></td>
+                    {% else %}
+                    <td><small class="text-muted">Up to date</small></td>
+                    {% endif %}
+
+                    <td class="admin-option">
+                        <div class="file-dropdown">
+                        <a class="btn btn-sm btn-drop" href="#">...</a>
+                        <div class="drop-menu drop-menu-file">
+                            <a class="file-update" href="{% url 'manual-detail' manual.id %}">View</a>
+                            <a class="file-update" href="{% url 'manual-update' manual.id %}">Update</a>
+
+                            <!-- If user is staff allow them to restore the manual -->
+                            {% if user.is_staff %}
+                                <a class="file-update manual-archive" data-pk="{{ manual.id }}" data-id="{% url 'manual-restore' manual.id %}" href="#">Restore</a>
+                            {% endif %}
+
+                        </div>
+                        </div>
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+            <!-- There are no archived manuals; display message -->
+            {% else %}
+            <tr><td>
+                <li class="list-group-item">There are currently no archived manuals</li>
+            </td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal Form -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -7,6 +7,7 @@ urlpatterns = [
     path('cd/', views.index, name='index-table'),
     path('manage/', views.manage, name='manage' ),
     path('assignments/', views.assignments, name='assignments' ),
+    path('archive/', views.archive, name='archive' ),
     path('manual/new-folder', views.DirectoryCreate.as_view(), name='dir-create'),
     path('manual/<int:pk>/update-folder', views.DirectoryUpdate.as_view(), name='dir-update'),
     path('manual/<int:pk>/delete-folder', views.DirectoryDelete.as_view(), name='dir-delete'),
@@ -17,5 +18,6 @@ urlpatterns = [
     path('manual/<int:pk>/admin-delete/', views.ManualAdminDelete.as_view(), name='manual-admin-delete'),
     path('manual/<int:pk>/assign/', views.ManualAssign.as_view(), name='manual-assign'),
     path('manual/<int:pk>/next-update/', views.ManualNextUpdate.as_view(), name='manual-next-update'),
-    path('manual/<int:pk>/archive/', views.ManualArchive.as_view(), name='manual-archive'),    
+    path('manual/<int:pk>/archive/', views.ManualArchive.as_view(), name='manual-archive'),
+    path('manual/<int:pk>/restore/', views.ManualRestore.as_view(), name='manual-restore'),    
 ]

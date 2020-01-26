@@ -39,9 +39,10 @@
                             <a class="file-update" href="{% url 'manual-detail' manual.id %}">View</a>
                             <a class="file-update" href="{% url 'manual-update' manual.id %}">Update</a>
 
-                            <!-- If user is staff allow them to restore the manual -->
+                            <!-- If user is staff allow them to restore or delete the manual -->
                             {% if user.is_staff %}
                                 <a class="file-update manual-archive" data-pk="{{ manual.id }}" data-id="{% url 'manual-restore' manual.id %}" href="#">Restore</a>
+                                <a class="file-delete manual-admin-delete" data-pk="{{ manual.id }}" data-id="{% url 'manual-admin-delete' manual.id %}" href="#">Delete</a>
                             {% endif %}
 
                         </div>
@@ -61,14 +62,7 @@
         </table>
     </div>
 
-    <!-- Modal Form -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-            </div>
-        </div>
-    </div>
+    {% include 'manuals/modal_form.html' %}
 
 {% endblock %}
 

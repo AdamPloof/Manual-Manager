@@ -36,9 +36,10 @@
           <li><a href="{% url 'register' %}"><i class="fas fa-door-open"></i> Sign Up</a></li>
         {% endif %}
       </ul>
-      <form class="navbar-form navbar-left" action="/action_page.php">
+      <!-- The navbar search from -->
+      <form class="navbar-form navbar-left" action="{% url 'search' %}" method="GET">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" id="search-bar" class="form-control" name="qs" placeholder="Search">
           <div class="input-group-btn">
             <button class="btn btn-default" type="submit">
               <i class="fas fa-search"></i>
@@ -46,13 +47,14 @@
           </div>
         </div>
       </form> 
+      
     </div>
   </nav>
 
   <!-- Fixed sidebar -->
     <div class="sidebar-container">
             <div class="sidebar-logo">
-              Manuals Toolbar
+              Hoju
             </div>
             <ul class="sidebar-navigation">
               <li class="header">Tools</li>
@@ -105,6 +107,23 @@
                 {% endfor %}
               {% endif %}
 
+              <!-- Alert messages in to notify user of overdue/due-soon assignments -->
+              {% if due_soon_count or overdue_count %}
+                  <div id="assignment-alert">
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <strong>Notice!</strong> You have <strong>{{ due_soon_count }}</strong> 
+                      {% if due_soon_count > 1 %}assignments{% else %}assignment{% endif %} due soon.
+                    </div>
+    
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <strong>Notice!</strong> You have <strong>{{ overdue_count }}</strong>
+                      {% if overdue_count > 1 %}assignments{% else %}assignment{% endif %} past due!
+                    </div>
+                  </div>
+              {% endif %}
+
               <!-- Page Content -->
               {% block content %}
               {% endblock %}
@@ -118,6 +137,7 @@
 <script type="text/javascript" src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script type="text/javascript" src="{% static 'manuals/js/index.js' %}"></script>
+<script type="text/javascript" src="{% static 'manuals/js/session.js' %}"></script>
 
 </body>
 </html>

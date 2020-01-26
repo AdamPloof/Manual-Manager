@@ -170,6 +170,38 @@
   font-size: 85%;
 }
 
+.assigned-count {
+  font-weight: bold;
+  color: rgb(122, 122, 122);
+}
+
+#assignment-alert {
+  display: none;
+}
+
+/* Search results */
+
+.panel-primary {
+  /* border-color: #337ab7; */
+  border-color: #337ab7;
+}
+.panel-primary > .panel-heading {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+.panel-primary > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #337ab7;
+}
+.panel-primary > .panel-heading .badge {
+  color: #337ab7;
+  background-color: #fff;
+}
+.panel-primary > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #337ab7;
+}
+
+
 /* Account image */
 .rounded-circle {
   border: 1px solid #ddd;
@@ -218,6 +250,7 @@
   float: right;
   padding-right: 2px;
 }
+
 
 /* Table Styles */
 

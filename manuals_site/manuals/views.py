@@ -3,7 +3,7 @@ import datetime
 from django.utils import timezone
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from .my_functions import reverse_query
+from .my_functions import reverse_query, get_assignment_count
 from .models import Manual, Directory
 from .forms import (
     ManualForm,
@@ -30,7 +30,7 @@ def index(request):
         ancestors = current_folder.get_ancestors()
         manuals = current_folder.manuals(manager='active_objects').all()
 
-        directories = {
+        context = {
             'directories': children,
             'current_folder': current_folder,
             'ancestors': ancestors,
@@ -39,17 +39,20 @@ def index(request):
 
         if request.is_ajax():
             # The request is ajax; refresh the directory table.
-            return render(request, 'manuals/index_table.html', directories)
+            return render(request, 'manuals/index_table.html', context)
         else:
             # The request is not ajax; load the index page.
-            return render(request, 'manuals/index.html', directories)
+            # Add assignments count to context for info cue on header
+            assignments = get_assignment_count(request.user)
+            context.update(assignments)
+            return render(request, 'manuals/index.html', context)
 
 
 # add test so to check that user.is_staff
 @login_required
 def manage(request):
     current_user = request.user
-    admin_of = current_user.admin_of.all()
+    admin_of = current_user.admin_of(manager='active_objects').all()
     context = {'admin_of': admin_of}
 
     return render(request, 'manuals/manage.html', context)
@@ -57,7 +60,8 @@ def manage(request):
 @login_required
 def assignments(request):
     current_user = request.user
-    assigned = current_user.assigned_to.all()
+    assigned = current_user.assigned_to(manager='active_objects').all()
+
     context = {'assigned': assigned}
 
     return render(request, 'manuals/assignments.html', context)
@@ -70,6 +74,30 @@ def archive(request):
 
     return render(request, 'manuals/archive.html', context)
 
+
+def search(request):
+    # Right now search is very basic. Future improvements would be
+    # to merge the different results querysets into one set
+    # to make rendering in template more flexible.
+    # Formatting the query string to make it more useful such as
+    # removing stop words and handling singular/plural version of words.
+    # Adding more fields such as author and update_status.
+
+    if request.method == "GET":
+        # Get the query string from the request
+        qs = request.GET.get('qs')
+
+        titles = Manual.objects.filter(title__icontains=qs)
+        tags = Manual.objects.filter(tags__icontains=qs).exclude(id__in=titles)
+        contents = Manual.objects.filter(content__icontains=qs).exclude(id__in=tags)
+
+        results = {
+            'titles': titles,
+            'tags': tags,
+            'contents': contents,
+        }
+
+    return render(request, 'manuals/search_results.html', results)
 
 
 # ** Manual Views **
@@ -122,13 +150,15 @@ class ManualUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ManualDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Manual
-    success_url = '/'
     
     def test_func(self):
         manual = self.get_object()
         if self.request.user == manual.author:
             return True
         return False
+
+    def get_success_url(self):
+        return reverse_lazy('archive')
 
 
 class ManualAssign(LoginRequiredMixin, BSModalUpdateView):
@@ -171,7 +201,6 @@ class ManualArchive(LoginRequiredMixin, BSModalUpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Archive this manual?'
         return context
-
 
 
 class ManualRestore(LoginRequiredMixin, BSModalUpdateView):

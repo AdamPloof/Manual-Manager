@@ -8,6 +8,7 @@ urlpatterns = [
     path('manage/', views.manage, name='manage' ),
     path('assignments/', views.assignments, name='assignments' ),
     path('archive/', views.archive, name='archive' ),
+    path('search/', views.search, name='search' ),
     path('manual/new-folder', views.DirectoryCreate.as_view(), name='dir-create'),
     path('manual/<int:pk>/update-folder', views.DirectoryUpdate.as_view(), name='dir-update'),
     path('manual/<int:pk>/delete-folder', views.DirectoryDelete.as_view(), name='dir-delete'),

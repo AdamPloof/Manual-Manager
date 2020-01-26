@@ -38,6 +38,10 @@ class Manual(models.Model):
     related_name='manuals',
     on_delete=models.CASCADE
     )
+
+    # Managers
+    objects = models.Manager()
+    active_objects = ManualActiveManager()
     
     def __str__(self):
         return self.title
@@ -59,10 +63,15 @@ class Manual(models.Model):
         else:
             # manual is coming due soon
             return status[1]
-        
-    # Managers
-    objects = models.Manager()
-    active_objects = ManualActiveManager()
+
+    def get_tags_list(self):
+        tags = self.tags
+        # Create a consistent split point for creating the list
+        # example that this handles for: tags ="tag1, tag2,tag3, tag4"
+        # becomes tags_formatted ="tag1,tag2,tag3,tag4"
+        tags_formatted = tags.replace(", ", ",")
+        tags_list = tags_formatted.split(",")
+        return tags_list
 
     def get_absolute_url(self):
         return reverse('manual-detail', kwargs={'pk': self.pk})

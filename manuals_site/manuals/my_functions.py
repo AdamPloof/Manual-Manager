@@ -1,7 +1,7 @@
 from django.utils.http import urlencode
 from django.urls import reverse
 
-from .models import Directory, Department
+from .models import Directory, Department, Manual
 
 
 def reverse_query(*args, **kwargs):
@@ -64,3 +64,35 @@ def get_default_department(node):
         # All ancestors have been checked for manuals with departments assigned
         # Time to give up and return None
         return None
+
+
+def get_assignment_count(user):
+    # Retrieve counts for current users total assigned manuals as well as
+    # counts for each update status of those manuals
+
+    assigned = user.assigned_to(manager='active_objects').all()
+
+    assigned_count = 0
+    overdue_count = 0
+    due_soon_count = 0
+    current_count = 0
+
+    for manual in assigned:
+        if manual.update_status() == "overdue":
+            overdue_count += 1
+            assigned_count += 1
+        elif manual.update_status() == "due_soon":
+            due_soon_count += 1
+            assigned_count += 1
+        else:
+            current_count += 1
+            assigned_count += 1
+
+    counts = {
+        'assigned_count': assigned_count,
+        'overdue_count': overdue_count,
+        'due_soon_count': due_soon_count,
+        'current_count': current_count
+        }
+    
+    return counts

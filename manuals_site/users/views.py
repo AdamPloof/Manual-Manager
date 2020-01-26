@@ -43,10 +43,10 @@ def register(request):
 @login_required
 def profile(request):
     current_user = request.user
-    author = current_user.author.all()
-    assigned = current_user.assigned_to.all()
-    admin_of = current_user.admin_of.all()
-    updated_by = current_user.updated_by.all()
+    author = current_user.author(manager='active_objects').all()
+    assigned = current_user.assigned_to(manager='active_objects').all()
+    admin_of = current_user.admin_of(manager='active_objects').all()
+    updated_by = current_user.updated_by(manager='active_objects').all()
 
     context = {
         'author': author,
@@ -171,7 +171,7 @@ def profile_remove_fav(request):
     return redirect('favorites')
 
 
-# This exists in case there's a future possibility that user fields
+# This exists in case there's a future possibility that we want to update user fields
 # Path to this form can be turned on/off in Settings
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = UserUpdateForm

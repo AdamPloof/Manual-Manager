@@ -7,6 +7,9 @@ $(document).ready(function() {
 });
 
 
+$("#date-test").flatpickr();
+
+
 function getDirTable() {
     return document.getElementById('dir-table');
 }
@@ -180,7 +183,6 @@ function initFavModals() {
 
     // Call the modal form to Add/Remove Favorite for folder
     $(".folder-add-fav, .folder-remove-fav").click(function() {
-
         // Change the glyphicon in the modal to folder
         $("#fav-symbol").attr("class", "far fa-folder ms-2");
         let fav_type = "folder";
@@ -189,7 +191,6 @@ function initFavModals() {
 
     // Call the modal form to Add/Remove Favorite for file
     $(".file-add-fav, .file-remove-fav").click(function() {
-
         // Change the glyphicon in the modal to file
         $("#fav-symbol").attr("class", "far fa-file ms-2");
         let fav_type = "file";
@@ -213,13 +214,17 @@ function initAdminModals() {
      // Call the modal form to archive Manual
      $(".manual-archive").each(function() {
         $(this).modalForm({formURL: $(this).data('id')});
-        loadDatePicker();
     });
 
      // Call the modal form to delete the Manual
      $(".manual-admin-delete").each(function() {
         $(this).modalForm({formURL: $(this).data('id')});
     });
+
+    $(".manual-next-update").click(function() {
+        loadDatePicker();
+    })
+    
 }
 
 
@@ -298,7 +303,18 @@ function closeDropdowns() {
 
 function loadDatePicker() {
     // Attach an event handler to Date input box
-    $("#modal").on('focus', '#id_next_update', function() {
-        $("#id_next_update").flatpickr();
-    })  
+    $("#modal").on("focus", "#id_next_update", function() {
+        if (!$("#id_next_update").hasClass("active")) {
+            // After the date picker is initialized prevent it from
+            // un-initializing when focus changes
+            $("#id_next_update").flatpickr();
+
+            $("#id_next_update").click(function() {
+                // Append the date picker to the modal to prevent focus stealing by modal
+                let modal = document.getElementById("modal");
+                let calendar = document.getElementsByClassName('flatpickr-calendar');
+                modal.appendChild(calendar[calendar.length - 1]);
+            })  
+        }
+    })
 }

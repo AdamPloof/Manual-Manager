@@ -1,13 +1,9 @@
-
 $(document).ready(function() {
     scanDirectory();
     getCurrentDir();
     showDropdowns();
     checkModals();
 });
-
-
-$("#date-test").flatpickr();
 
 
 function getDirTable() {

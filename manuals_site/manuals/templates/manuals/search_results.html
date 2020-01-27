@@ -1,10 +1,12 @@
 {% extends "manuals/header.html" %}
 {% block content %}
+{% load static %}
 
-  <!-- Search by title results -->
+  <!-- Search results -->
   <div class="content-section">
+
     <h2>Search Results</h2>
-    {% for manual in titles %}
+    {% for manual in results %}
     <div class="panel panel-info">
       <div class="panel-heading">
         <span>
@@ -18,36 +20,31 @@
     </div>
     {% endfor %}
 
-    <!-- Search by tags results -->
-    {% for manual in tags %}
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <span>
-          <h3 class="panel-title"><a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></h3>
-          <small class="text-muted">{{ manual.folder }}</small>
-        </span>
-      </div>
-      <div class="panel-body">
-          <p>{{ manual.content|striptags|truncatechars:150 }}</p>
-      </div>
-    </div>
-    {% endfor %}
+    {% if results.has_other_pages %}
 
-    <!-- Search by contents results -->
-    {% for manual in contents %}
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <span>
-          <h3 class="panel-title"><a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a></h3>
-          <small class="text-muted">{{ manual.folder }}</small>
-        </span>
-      </div>
-      <div class="panel-body">
-          <p>{{ manual.content|striptags|truncatechars:150 }}</p>
-      </div>
-    </div>
-    {% endfor %}
+      {% if results.has_previous %}
+      <a class="btn btn-info page-nav"  data-page="1" href="#">First</a>
+      <a class="btn btn-info page-nav"  data-page="{{ results.previous_page_number }}" href="#">Previous</a>
+      {% endif %}  
+
+      {% for page_num in results.paginator.page_range %}
+        {% if page_num == results.number %}
+        <a class="btn btn-default page-nav"  data-page="{{ results.number }}" href="#">{{ results.number }}</a>
+        {% elif page_num > results.number|add:'-3' and page_num < results.number|add:'3' %}
+        <a class="btn btn-info page-nav"  data-page="{{ page_num }}" href="#">{{ page_num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if results.has_next %}
+      <a class="btn btn-info page-nav"  data-page="{{ results.next_page_number }}" href="#">Next</a>
+      <a class="btn btn-info page-nav"  data-page="{{ results.paginator.num_pages }}" href="#">Last</a>
+      {% endif %}
+
+
+    {% endif %}
     
   </div>
+
+  <script type="text/javascript" src="{% static 'manuals/js/search.js' %}"></script>
   
 {% endblock %}

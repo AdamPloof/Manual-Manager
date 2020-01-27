@@ -1,6 +1,8 @@
 import datetime
 
 from django.utils import timezone
+from django.db.models import Q
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .my_functions import reverse_query, get_assignment_count
@@ -77,8 +79,6 @@ def archive(request):
 
 def search(request):
     # Right now search is very basic. Future improvements would be
-    # to merge the different results querysets into one set
-    # to make rendering in template more flexible.
     # Formatting the query string to make it more useful such as
     # removing stop words and handling singular/plural version of words.
     # Adding more fields such as author and update_status.
@@ -86,18 +86,17 @@ def search(request):
     if request.method == "GET":
         # Get the query string from the request
         qs = request.GET.get('qs')
+        query = Q(title__icontains=qs) | Q(tags__icontains=qs) | Q(content__icontains=qs)
+        results_all = Manual.objects.filter(query)
+        paginator = Paginator(results_all, 2)
 
-        titles = Manual.objects.filter(title__icontains=qs)
-        tags = Manual.objects.filter(tags__icontains=qs).exclude(id__in=titles)
-        contents = Manual.objects.filter(content__icontains=qs).exclude(id__in=tags)
+        page = request.GET.get('page')
+        results = paginator.get_page(page)
 
-        results = {
-            'titles': titles,
-            'tags': tags,
-            'contents': contents,
-        }
-
-    return render(request, 'manuals/search_results.html', results)
+        last_page_num = results.paginator.num_pages
+        last_page = paginator.get_page(last_page_num)
+        print(last_page.object_list)
+    return render(request, 'manuals/search_results.html', {'results': results})
 
 
 # ** Manual Views **

@@ -70,6 +70,16 @@ def get_assignment_count(user):
     # Retrieve counts for current users total assigned manuals as well as
     # counts for each update status of those manuals
 
+    if not user.is_authenticated:
+        # Check if user is logged in and if not return 0 assignments
+        counts = {
+            'assigned_count': 0,
+            'overdue_count': 0,
+            'due_soon_count': 0,
+            'current_count': 0
+        }
+        return counts
+
     assigned = user.assigned_to(manager='active_objects').all()
 
     assigned_count = 0
@@ -93,6 +103,6 @@ def get_assignment_count(user):
         'overdue_count': overdue_count,
         'due_soon_count': due_soon_count,
         'current_count': current_count
-        }
+    }
     
     return counts

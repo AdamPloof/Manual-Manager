@@ -88,7 +88,7 @@ def search(request):
         qs = request.GET.get('qs')
         query = Q(title__icontains=qs) | Q(tags__icontains=qs) | Q(content__icontains=qs)
         results_all = Manual.objects.filter(query)
-        paginator = Paginator(results_all, 2)
+        paginator = Paginator(results_all, 5)
 
         page = request.GET.get('page')
         results = paginator.get_page(page)

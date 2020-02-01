@@ -1,0 +1,499 @@
+.container-fluid.main-container {
+  margin-top: 25px;
+}
+
+.sidebar-container {
+    position: fixed;
+    width: 220px;
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #1f1f1f;
+    color: #fff;
+    z-index: 2;
+    top: 0;
+  }
+  
+  .sidebar-logo {
+    position: sticky;
+    padding: 15px 15px 5px 30px;
+    font-size: 20px;
+    height: 55px;
+    background-color: rgb(52, 66, 44);
+    z-index: 3;
+    top: 0;
+  }
+  
+  .sidebar-navigation {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    position: relative;
+  }
+  
+  .sidebar-navigation li {
+    background-color: transparent;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    line-height: 20px;
+  }
+  
+  .sidebar-navigation li a {
+    padding: 10px 15px 10px 30px;
+    display: block;
+    color: #fff;
+  }
+
+  #new-dir.not-allowed {
+    color: rgba(211, 211, 211, 0.61);
+    cursor: not-allowed;
+  }
+  
+  .sidebar-navigation li .fa {
+    margin-right: 10px;
+  }
+
+  .sidebar-navigation li .far {
+    margin-right: 10px;
+  }
+
+  .sidebar-navigation li .fas {
+    margin-right: 10px;
+  }
+  
+  .sidebar-navigation li a:active,
+  .sidebar-navigation li a:focus {
+    text-decoration: none;
+    outline: none;
+  }
+
+  .sidebar-navigation li a:hover {
+    background-color: rgb(131, 131, 131);
+    transition: .2s ease-in;
+    text-decoration: none;
+    outline: none;
+  }
+  
+  .sidebar-navigation li:hover::before {
+    width: 100%;
+  }
+  
+  .sidebar-navigation .header {
+    font-size: 12px;
+    text-transform: uppercase;
+    background-color: #191b17;
+    padding: 10px 15px 10px 30px;
+  }
+  
+  .sidebar-navigation .header::before {
+    background-color: transparent;
+  }
+
+  .favorites {
+    font-size: 90%;
+  }
+
+.content-container {
+  padding-left: 235px;
+  margin-top: 30px;
+  padding-top: 45px;
+}
+
+.container-fluid.nav-container {
+  padding-left: 0px;
+}
+
+.navbar {
+  max-height: 55px;
+  min-height: 55px;
+}
+
+.navbar-default {
+  border: none;
+  border-radius: 0px;
+  background-color: rgb(163, 184, 136);
+  z-index: 2;
+  box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.2);
+}
+
+.navbar-header {
+  background-color: rgb(52, 66, 44);
+  width: 220px;
+  margin: 0px;
+}
+
+.navbar-brand {
+  color: #fff;
+}
+
+#admin-btn {
+  left: 0;
+  background-color: green;
+  border-radius: 30%;
+  z-index: 3;
+}
+
+#admin-btn:hover {
+  background-color: lightgreen;
+  border-radius: 30%;
+}
+
+.nav-pills {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+  color: rgba(253, 250, 250, 0.986);
+  background-color: rgb(68, 75, 63);
+}
+
+.nav-pills > li.active > a:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(90, 95, 78);
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: rgba(78, 78, 78, 0.986);
+}
+
+.input-group {
+  top: 2px;
+}
+
+.navbar-default .navbar-nav li .archive-link {
+  font-size: 85%;
+}
+
+.assigned-count {
+  font-weight: bold;
+  color: rgb(122, 122, 122);
+}
+
+#assignment-alert {
+  display: none;
+}
+
+/* Search results */
+
+.panel-primary {
+  /* border-color: #337ab7; */
+  border-color: #337ab7;
+}
+.panel-primary > .panel-heading {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+.panel-primary > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #337ab7;
+}
+.panel-primary > .panel-heading .badge {
+  color: #337ab7;
+  background-color: #fff;
+}
+.panel-primary > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #337ab7;
+}
+
+
+/* Account image */
+.rounded-circle {
+  border: 1px solid #ddd;
+  padding: 5px;
+  width: 85px;
+  height: auto;
+}
+
+.account-img {
+  border-radius: 50%;
+  float: left;
+  margin-right: 7px;
+}
+
+.account-info {
+  position: absolute;
+  right: 0px;
+  width: 325px;
+  padding: 15px;
+}
+
+/* User Profile */
+
+.panel-default {
+  width: 500px;
+  max-height: 400px;
+  margin: 10px;
+  box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  overflow: auto;
+  margin-bottom: 30px;
+}
+
+.panel-heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.profile-title {
+  position: relative;
+  left: 10px;
+}
+
+.algn-right {
+  float: right;
+  padding-right: 2px;
+}
+
+
+/* Table Styles */
+
+.thead-dark {
+color: #fff;
+background-color:rgb(52, 66, 44);
+border-color:#1c2412;
+}
+
+.admin-head {
+  color: #333333;
+  background-color:#ebe9e9;
+  }
+
+a.folder-breadcrumb {
+  color: rgba(255, 255, 255, 0.842);
+  font-size: 90%;
+}
+
+a.folder-breadcrumb:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+a.folder-breadcrumb::after {
+  padding: 8px;
+  color:rgba(255, 255, 255, 0.842);
+  content: "/";
+}
+
+.file-root::before {
+  content: '\f07c';
+  font-family: "fontawesome"; 
+  font-size: 14px;
+  font-weight: 900;
+  float: left;
+  margin-right: 6px;
+}
+
+.file-folder::before {
+  content: '\f07b';
+  font-family: "fontawesome";
+  font-size: 14px;
+  float: left;
+  margin-right: 6px;
+}
+
+.file-file::before {
+  content: '\f15b';
+  font-family: "fontawesome";
+  font-size: 14px;
+  float: left;
+  margin-right: 6px;
+}
+
+.col-main {
+  width: 95%;
+}
+
+.col-secondary {
+  width: 5%;
+}
+
+.col-options {
+  width: 127px;
+}
+
+/* Dropdown for update and delete buttons on folders */
+
+.btn-drop {
+  font-size: 10pt;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.btn-outline-info:hover {
+  background-color: rgb(224, 224, 224);
+}
+
+.folder-dropdown,
+.file-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.drop-menu {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 65px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0;
+}
+
+.drop-menu.drop-menu-file {
+  min-width: 95px;
+}
+
+.folder-update,
+.folder-delete,
+.file-update,
+.file-delete,
+.folder-add-fav,
+.file-add-fav {
+  font-size: 10pt;
+  color: black;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  border-radius: 2px;
+}
+
+.folder-delete,
+.file-delete,
+.file-remove-fav,
+.folder-remove-fav {
+  background-color: rgb(231, 81, 81);
+  color: white;
+}
+
+.folder-update:hover,
+.file-update:hover,
+.folder-add-fav:hover,
+.file-add-fav:hover {
+  background-color: #ddd;
+  text-decoration: none;
+}
+
+.folder-delete:hover,
+.file-delete:hover,
+.file-remove-fav:hover,
+.folder-remove-fav:hover {
+  background-color: rgb(196, 60, 60);
+  color: white;
+  text-decoration: none;
+}
+
+.file-update, .file-delete {
+  font-size: 85%;
+}
+
+.show-drop {
+  display: block;
+}
+
+/* Breadcrumb Navigation */
+
+ /* Style the list */
+ ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+  color: #a7ee95;
+  text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+  color: #beceb6;
+  text-decoration: underline;
+} 
+
+/* Margins */
+
+.mt-6 {
+  margin-top: 6px;
+}
+
+.mb-1 {
+  margin-bottom: 1px;
+}
+
+.ms-4 {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+/* Update/Assignment manual header */
+
+.media-body {
+  padding: 8px;
+}
+
+.account-info {
+  top: 69px;
+}
+
+.article-head {
+  position: relative;
+  display: flex;
+  background-color: rgb(224, 221, 221);
+  margin: auto;
+  border-radius: 5px;
+  padding: 12px;
+  margin-bottom: 36px;
+  align-items: center;
+  box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+}
+
+.article-head.manual-warning {
+  background-color: #fcf8e3; 
+}
+
+.article-head.manual-danger {
+  background-color: #f2dede; 
+}
+
+.article-info {
+  display: block;
+}
+
+.article-update {
+  position: relative;
+  left: 200px;
+  margin: auto;
+  overflow: auto;
+}
+
+.admin-link:after {
+  padding-left: 4px;
+  content: "/";
+}
+
+/* Manual Layout */
+.content-section {
+  width: 95%;
+  margin: auto;
+  margin-bottom: 60px;
+}

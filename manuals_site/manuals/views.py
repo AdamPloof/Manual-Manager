@@ -245,6 +245,7 @@ class DirectoryCreate(LoginRequiredMixin, BSModalCreateView):
         return context
 
     def get_success_url(self):
+        print('success?')
         dir_id = self.request.GET.get('dir_id', default=1)
         return reverse_query('index', get={'dir_id': dir_id})
 

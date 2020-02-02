@@ -47,11 +47,15 @@ def get_default_department(node):
     # Identify a likely default department when creating new manuals
     # Check current directory, then siblings, then ancestors
     # Use the department of the manuals contained as default for new manual
-    siblings = node.get_siblings(include_self=True)
-    for node in siblings:
-        department = scan_manuals_for_department(node)
-        if department:
-            return department
+    dept = scan_manuals_for_department(node)
+    if dept:
+        return dept
+
+    siblings = node.get_siblings(include_self=False)
+    for folder in siblings:
+        dept = scan_manuals_for_department(folder)
+        if dept:
+            return dept
         else:
             pass
 

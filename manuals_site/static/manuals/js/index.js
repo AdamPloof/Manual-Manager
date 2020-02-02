@@ -264,6 +264,7 @@ function showDropdowns() {
 
     for(let i = 0; i < dropdownBtns.length; i++) {
         dropdownBtns[i].addEventListener("click", function() {
+            event.preventDefault();
             closeDropdowns();
             this.nextElementSibling.classList.toggle("show-drop");
         })
